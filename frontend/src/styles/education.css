@@ -1,0 +1,1301 @@
+* {
+  box-sizing: border-box;
+}
+
+.education-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+  position: relative;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.education-header {
+  height: 65px;
+  border-bottom: 1px solid rgba(0, 151, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  background: #000;
+  position: relative;
+  z-index: 20;
+}
+
+.education-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.education-incois {
+  width: 70px;
+  height: 48px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #009cff;
+  text-shadow: 0 0 8px #008dff;
+}
+
+.education-brand-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(0, 159, 255, 0.55);
+}
+
+.education-brand-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.education-brand-title strong {
+  color: #00a9ff;
+  font-size: 19px;
+  letter-spacing: 1px;
+}
+
+.education-brand-title span {
+  color: #b8c8d7;
+  font-size: 12px;
+  margin-top: 4px;
+  letter-spacing: 0.8px;
+}
+
+.education-info {
+  margin-left: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #009cff;
+  background: transparent;
+  color: #18b9ff;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.education-partners {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #dcecff;
+}
+
+.moes-symbol {
+  font-size: 28px;
+  color: #9db3c9;
+}
+
+.education-partners div {
+  display: flex;
+  flex-direction: column;
+}
+
+.education-partners strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.education-partners small {
+  color: #7ea1bc;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.education-main {
+  height: calc(100vh - 65px);
+  min-height: 650px;
+  display: grid;
+  grid-template-columns:
+    300px minmax(480px, 1fr) 360px;
+  position: relative;
+}
+
+/* =========================================================
+   LEFT PANEL
+   ========================================================= */
+
+.education-left-panel {
+  padding: 60px 20px 80px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 10;
+}
+
+.education-layer {
+  min-height: 92px;
+  width: 100%;
+  display: grid;
+  grid-template-columns:
+    52px 1fr 32px;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 153, 255, 0.25);
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  padding: 8px 4px;
+  transition:
+    background 0.2s ease,
+    border 0.2s ease;
+}
+
+.education-layer:hover {
+  background: rgba(0, 125, 210, 0.08);
+}
+
+.education-layer.active {
+  border: 1px solid #009eff;
+  border-radius: 8px;
+  background: rgba(0, 122, 213, 0.14);
+  box-shadow:
+    0 0 14px rgba(0, 151, 255, 0.18),
+    inset 0 0 15px rgba(0, 151, 255, 0.06);
+}
+
+.layer-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 31px;
+}
+
+.layer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.layer-content strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.layer-content small {
+  color: #91a0ae;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.education-layer.active .layer-content strong {
+  color: #00b8ff;
+}
+
+.layer-info,
+.location-info,
+.did-you-know button,
+.instrument-info {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #00a5ff;
+  color: #00b7ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* =========================================================
+   CENTER
+   ========================================================= */
+
+.education-center {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.education-globe {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.education-globe canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.education-location {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #dcefff;
+  font-size: 14px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.education-location strong {
+  color: #00b7ff;
+  font-weight: 500;
+}
+
+.location-pin {
+  color: #00aaff;
+  font-size: 24px;
+}
+
+.location-info {
+  margin-left: 4px;
+  pointer-events: auto;
+}
+
+.did-you-know {
+  position: absolute;
+  left: 35px;
+  bottom: 125px;
+  width: 195px;
+  padding: 14px;
+  border: 1px solid rgba(0, 158, 255, 0.55);
+  border-radius: 12px;
+  background: rgba(2, 16, 29, 0.82);
+  box-shadow:
+    0 0 20px rgba(0, 137, 255, 0.09);
+  z-index: 4;
+}
+
+.did-you-know-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.did-you-know-title span {
+  color: #00aaff;
+  font-size: 20px;
+}
+
+.did-you-know-title button {
+  margin-left: auto;
+}
+
+.did-you-know p {
+  margin: 10px 0 0;
+  color: #b7c7d5;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RIGHT
+   ========================================================= */
+
+.education-right-panel {
+  padding: 110px 25px 80px 5px;
+  position: relative;
+  z-index: 10;
+}
+
+.temperature-info-card {
+  /* border: 1px solid #008fe8;
+  border-radius: 13px;
+  background: rgba(2, 14, 27, 0.88);
+  padding: 18px;
+  box-shadow:
+    0 0 22px rgba(0, 136, 255, 0.08),
+    inset 0 0 25px rgba(0, 136, 255, 0.025); */
+  display: none;
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.info-card-header strong {
+  color: #00b5ff;
+}
+
+.info-card-header button {
+  border: 0;
+  background: transparent;
+  color: #9fb5c8;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.info-section {
+  margin-bottom: 17px;
+}
+
+.info-section h4 {
+  color: #00b4ff;
+  margin: 0 0 6px;
+  font-size: 13px;
+}
+
+.info-section p {
+  margin: 0;
+  color: #c0cedb;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.learn-more-button {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #178dce;
+  border-radius: 7px;
+  color: #8edaff;
+  background: rgba(0, 102, 173, 0.08);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px;
+}
+
+/* =========================================================
+   COLOR SCALE
+   ========================================================= */
+
+.education-color-scale {
+  /* margin-top: 15px;
+  border: 1px solid rgba(0, 153, 255, 0.55);
+  border-radius: 10px;
+  padding: 12px;
+  background: rgba(2, 15, 29, 0.82); */
+  display: none;
+}
+
+.color-scale-title {
+  color: #00b4ff;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.temperature-gradient {
+  height: 18px;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg,
+      #ff2020 0%,
+      #ff8a00 17%,
+      #ffe600 34%,
+      #00ef7b 53%,
+      #00d8ff 70%,
+      #005eff 84%,
+      #3300ff 100%);
+}
+
+.temperature-values {
+  display: flex;
+  justify-content: space-between;
+  color: #b9cde0;
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+/* =========================================================
+   INSTRUMENT SELECTOR
+   RIGHT SIDE
+   ========================================================= */
+
+.education-instruments {
+  position: absolute;
+
+  right: 25px;
+  top: 135px;
+
+  width: 300px;
+
+  margin-top: 0;
+
+  border: 1px solid rgba(0, 153, 255, 0.55);
+  border-radius: 10px;
+
+  padding: 7px 10px;
+
+  background: rgba(2, 15, 29, 0.88);
+
+  z-index: 15;
+}
+
+
+/* Each instrument row */
+
+.education-instrument {
+  width: 100%;
+
+  min-height: 38px;
+
+  border: 0;
+
+  background: transparent;
+
+  display: grid;
+
+  grid-template-columns:
+    20px
+    25px
+    1fr
+    25px;
+
+  align-items: center;
+
+  color: #dceaf7;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  gap: 5px;
+}
+
+
+/* Instrument radio */
+
+.instrument-radio {
+  width: 17px;
+  height: 17px;
+
+  border-radius: 50%;
+
+  border: 1px solid #00a9ff;
+}
+
+
+/* Instrument icon */
+
+.instrument-icon {
+  color: #00aaff;
+
+  font-size: 16px;
+
+  text-align: center;
+}
+
+
+/* Instrument name */
+
+.instrument-name {
+  font-size: 12px;
+}
+
+
+/* Info button */
+
+.instrument-info {
+  width: 25px;
+  height: 25px;
+
+  border: 1px solid #00a5ff;
+
+  color: #00b7ff;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  justify-self: end;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.education-footer {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  z-index: 12;
+}
+
+.education-credit-button {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 105px;
+  height: 44px;
+  background: rgba(3, 19, 33, 0.85);
+  color: #fff;
+  border: 1px solid #005a91;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.education-play-controls {
+  display: flex;
+  gap: 10px;
+  margin-left: 235px;
+}
+
+.education-play-controls button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  color: #fff;
+  background: #082b4a;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.education-timeline {
+  flex: 1;
+  margin-left: 30px;
+  margin-right: 20px;
+  position: relative;
+  padding-top: 20px;
+}
+
+.timeline-current-date {
+  position: absolute;
+  right: 0;
+  top: -8px;
+  color: #dcefff;
+  font-size: 13px;
+}
+
+.timeline-line {
+  height: 2px;
+  background: #078fd2;
+  position: relative;
+}
+
+.timeline-line span {
+  width: 10px;
+  height: 10px;
+  background: #00b7ff;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: -4px;
+  box-shadow: 0 0 10px #00aaff;
+}
+
+.timeline-months {
+  display: flex;
+  justify-content: space-between;
+  color: #7f9bad;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+.timeline-years {
+  display: flex;
+  gap: 130px;
+  color: #c2d1dc;
+  font-size: 11px;
+  margin-top: 7px;
+}
+
+.education-quality {
+  display: grid;
+  grid-template-columns: 42px 42px;
+  gap: 5px;
+}
+
+.education-quality button {
+  width: 42px;
+  height: 30px;
+  border: 1px solid #173d58;
+  background: #061b2b;
+  color: #7793a9;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.education-quality button.active {
+  color: #fff;
+  border-color: #008fe8;
+  background: #075b91;
+}
+
+/* =========================================================
+   BOTTOM MESSAGE
+   ========================================================= */
+
+.education-bottom-message {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  min-width: 480px;
+  height: 52px;
+  border: 1px solid #15597e;
+  border-radius: 9px;
+  background: rgba(3, 20, 35, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  color: #8bc7e9;
+  z-index: 13;
+  font-size: 13px;
+}
+
+.education-bottom-message>span:first-child {
+  color: #00aaff;
+  font-size: 21px;
+}
+
+.education-bottom-message button {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #009eea;
+  border-radius: 50%;
+  background: transparent;
+  color: #00b6ff;
+  cursor: pointer;
+}
+
+/* =========================================================
+   CHATBOT OVERLAY
+   ========================================================= */
+
+.education-chatbot {
+  width: 400px;
+  max-width: 400px;
+
+  max-height: calc(100vh - 130px);
+
+  overflow-y: auto;
+
+  border: 1px solid #00a8ff;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(145deg,
+      rgba(4, 27, 48, 0.98),
+      rgba(2, 12, 25, 0.98));
+
+  box-shadow:
+    0 0 40px rgba(0, 140, 255, 0.22),
+    inset 0 0 30px rgba(0, 140, 255, 0.04);
+
+  backdrop-filter: blur(16px);
+
+  animation: chatbotAppear 0.2s ease-out;
+}
+
+/* =========================================================
+   CHATBOT
+   ========================================================= */
+
+.education-chatbot {
+  width: min(455px, calc(100vw - 40px));
+  max-height: min(720px, calc(100vh - 60px));
+  overflow-y: auto;
+  border: 1px solid #00a8ff;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(145deg,
+      rgba(4, 27, 48, 0.98),
+      rgba(2, 12, 25, 0.98));
+
+  box-shadow:
+    0 0 50px rgba(0, 140, 255, 0.24),
+    inset 0 0 30px rgba(0, 140, 255, 0.04);
+
+  backdrop-filter: blur(16px);
+
+  animation:
+    chatbotAppear 0.2s ease-out;
+}
+
+@keyframes chatbotAppear {
+  from {
+    opacity: 0;
+    transform:
+      translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   CHAT HEADER
+   ========================================================= */
+
+.chatbot-header {
+  min-height: 58px;
+  padding: 0 18px;
+  border-bottom:
+    1px solid rgba(0,
+      157,
+      255,
+      0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #dff5ff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chatbot-header>div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.chatbot-status-dot {
+  width: 9px;
+  height: 9px;
+  background: #21ff91;
+  border-radius: 50%;
+  box-shadow:
+    0 0 9px #21ff91;
+}
+
+.chatbot-close {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  color: #8faabc;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* =========================================================
+   TOPIC
+   ========================================================= */
+
+.chatbot-topic {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-bottom:
+    1px solid rgba(0,
+      157,
+      255,
+      0.18);
+}
+
+.chatbot-topic-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:
+    1px solid #008fe8;
+  border-radius: 10px;
+  color: #00b9ff;
+  font-size: 24px;
+  background:
+    rgba(0, 145, 255, 0.08);
+}
+
+.chatbot-topic div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chatbot-topic strong {
+  color: #00b8ff;
+  font-size: 17px;
+}
+
+.chatbot-topic small {
+  color: #849caf;
+  font-size: 11px;
+}
+
+/* =========================================================
+   INTRODUCTION
+   ========================================================= */
+
+.chatbot-introduction {
+  padding: 17px 18px 10px;
+  color: #b8cbd9;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.chatbot-introduction strong {
+  color: #00b6ff;
+}
+
+/* =========================================================
+   PREDEFINED QUESTIONS
+   ========================================================= */
+
+.chatbot-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding:
+    10px 18px 15px;
+}
+
+.chatbot-question {
+  width: 100%;
+  min-height: 45px;
+  border:
+    1px solid #165071;
+  border-radius: 8px;
+  background:
+    rgba(4, 34, 56, 0.72);
+  color: #c7e1ef;
+  text-align: left;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.chatbot-question:hover,
+.chatbot-question.selected {
+  border-color: #00aaff;
+  background:
+    rgba(0, 128, 213, 0.18);
+  color: #fff;
+}
+
+/* =========================================================
+   CHAT HISTORY
+   ========================================================= */
+
+.chatbot-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding:
+    0 18px 15px;
+
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  max-width: 92%;
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background:
+    rgba(0, 126, 210, 0.22);
+  border:
+    1px solid #185c82;
+}
+
+.chat-message.assistant {
+  align-self: flex-start;
+  background:
+    rgba(3, 35, 55, 0.8);
+  border:
+    1px solid #164967;
+}
+
+.chat-message-label {
+  color: #00b7ff;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.chat-message-text {
+  color: #c7d7e1;
+}
+
+/* =========================================================
+   CHAT INPUT
+   ========================================================= */
+
+.chatbot-input-area {
+  display: flex;
+  gap: 8px;
+  padding:
+    12px 18px 15px;
+
+  border-top:
+    1px solid rgba(0,
+      157,
+      255,
+      0.2);
+}
+
+.chatbot-input-area input {
+  min-width: 0;
+  flex: 1;
+
+  height: 42px;
+
+  border:
+    1px solid #165071;
+  border-radius: 8px;
+
+  background:
+    rgba(3, 25, 43, 0.9);
+
+  color: #eaf7ff;
+
+  padding:
+    0 12px;
+
+  font-size: 13px;
+
+  outline: none;
+}
+
+.chatbot-input-area input:focus {
+  border-color: #00aaff;
+
+  box-shadow:
+    0 0 10px rgba(0,
+      170,
+      255,
+      0.12);
+}
+
+.chatbot-input-area input::placeholder {
+  color: #718da1;
+}
+
+.chatbot-input-area button {
+  width: 70px;
+  min-width: 70px;
+  height: 42px;
+
+  border:
+    1px solid #008fe8;
+  border-radius: 8px;
+
+  background: #075b91;
+
+  color: #fff;
+  cursor: pointer;
+
+  font-size: 12px;
+}
+
+.chatbot-input-area button:hover:not(:disabled) {
+  background: #0874b4;
+}
+
+.chatbot-input-area button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   CHATBOT FOOTER
+   ========================================================= */
+
+.chatbot-footer {
+  min-height: 40px;
+
+  border-top:
+    1px solid rgba(0,
+      157,
+      255,
+      0.2);
+
+  padding: 0 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #69899e;
+  font-size: 10px;
+}
+
+.chatbot-footer span:last-child {
+  color: #35d991;
+}
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+.education-chatbot::-webkit-scrollbar,
+.chatbot-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+.education-chatbot::-webkit-scrollbar-track,
+.chatbot-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.education-chatbot::-webkit-scrollbar-thumb,
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: #15597e;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .education-main {
+    grid-template-columns:
+      300px minmax(480px, 1fr) 360px;
+  }
+
+  .education-left-panel {
+    padding-left: 14px;
+  }
+
+  .education-right-panel {
+    padding-right: 14px;
+  }
+
+  .education-play-controls {
+    margin-left: 180px;
+  }
+}
+
+@media (max-width: 950px) {
+  .education-header {
+    padding: 0 12px;
+  }
+
+  .education-partners {
+    display: none;
+  }
+
+  .education-main {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height:
+      calc(100vh - 65px);
+    overflow-y: auto;
+  }
+
+  .education-left-panel,
+  .education-right-panel {
+    position: relative;
+    padding: 20px;
+  }
+
+  .education-left-panel {
+    display: grid;
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .education-center {
+    min-height: 600px;
+    order: -1;
+  }
+
+  .education-globe {
+    min-height: 600px;
+  }
+
+  .education-footer {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin: 15px;
+    flex-wrap: wrap;
+    height: auto;
+    gap: 15px;
+  }
+
+  .education-credit-button {
+    position: relative;
+  }
+
+  .education-play-controls {
+    margin-left: 0;
+  }
+
+  .education-bottom-message {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    margin: 15px;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .education-header {
+    height: 58px;
+  }
+
+  .education-incois {
+    width: 58px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .education-brand-title strong {
+    font-size: 15px;
+  }
+
+  .education-brand-title span {
+    font-size: 9px;
+  }
+
+  .education-info {
+    width: 27px;
+    height: 27px;
+    font-size: 15px;
+  }
+
+  .education-main {
+    min-height:
+      calc(100vh - 58px);
+  }
+
+  .education-left-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .education-chatbot {
+    width: calc(100vw - 20px);
+    max-height:
+      calc(100vh - 30px);
+  }
+
+  .chatbot-input-area {
+    flex-direction: column;
+  }
+
+  .chatbot-input-area button {
+    width: 100%;
+  }
+
+  .education-bottom-message {
+    font-size: 11px;
+    padding: 0 12px;
+  }
+}
+
+
+/* =========================================================
+   REMOVE EDUCATION HINT CARDS
+   ========================================================= */
+
+/* Remove "Did you know?" card */
+.did-you-know {
+  display: none !important;
+}
+
+/* Remove "Click on the globe..." message */
+.education-bottom-message {
+  display: none !important;
+}
+
+
+/* =========================================================
+   SMALLER + LOWER INSTRUMENT PANEL
+   ========================================================= */
+
+.education-instruments {
+  width: 285px;
+  margin-left: auto;
+  margin-top: 45px;
+
+  padding: 7px 9px;
+
+  border-radius: 9px;
+}
+
+/* Smaller individual instrument rows */
+.education-instrument {
+  min-height: 35px;
+
+  grid-template-columns:
+    19px
+    25px
+    1fr
+    24px;
+
+  gap: 4px;
+}
+
+/* Smaller radio button */
+.instrument-radio {
+  width: 15px;
+  height: 15px;
+}
+
+/* Smaller icons */
+.instrument-icon {
+  font-size: 17px;
+}
+
+/* Smaller names */
+.instrument-name {
+  font-size: 12px;
+}
+
+/* Smaller info buttons */
+.instrument-info {
+  width: 24px;
+  height: 24px;
+  font-size: 13px;
+}
+
+

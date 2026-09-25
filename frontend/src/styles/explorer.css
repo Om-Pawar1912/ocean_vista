@@ -1,0 +1,3024 @@
+/* =========================================================
+   OCEAN VISTA - EXPLORER
+========================================================= */
+
+.explorer-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-width: 1100px;
+  overflow: hidden;
+  background: #01070d;
+  color: #d9edf5;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* =========================================================
+   3D CANVAS
+========================================================= */
+
+.explorer-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.explorer-canvas canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-container {
+  position: absolute;
+  top: 32px;
+  left: 36px;
+
+  width: 462px;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 12px 0 17px;
+
+  background: rgba(3, 17, 28, 0.88);
+
+  border: 1px solid rgba(0, 205, 255, 0.72);
+  border-radius: 16px;
+
+  box-shadow:
+    0 0 20px rgba(0, 190, 255, 0.08),
+    inset 0 0 20px rgba(0, 100, 150, 0.05);
+
+  z-index: 20;
+}
+
+.search-icon {
+  width: 25px;
+
+  color: #36d8ff;
+
+  font-size: 28px;
+  line-height: 1;
+
+  margin-right: 8px;
+}
+
+.search-container input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #dceff5;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.search-container input::placeholder {
+  color: #77909c;
+}
+
+.search-shortcut {
+  min-width: 43px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(120, 160, 175, 0.25);
+  border-radius: 7px;
+
+  color: #78909b;
+
+  font-size: 12px;
+
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* =========================================================
+   SEARCH RESULTS
+========================================================= */
+
+.search-results {
+  position: absolute;
+
+  top: 94px;
+  left: 36px;
+
+  width: 462px;
+
+  padding: 6px;
+
+  background: rgba(2, 15, 24, 0.96);
+
+  border: 1px solid rgba(0, 196, 245, 0.45);
+  border-radius: 12px;
+
+  z-index: 50;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.55);
+}
+
+.search-results button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 11px 13px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #dcecf2;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.search-results button:hover {
+  background: rgba(0, 190, 240, 0.12);
+}
+
+.search-results span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.search-results small {
+  color: #73909c;
+  font-size: 11px;
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand-area {
+  position: absolute;
+
+  top: 33px;
+  right: 36px;
+
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+
+  z-index: 20;
+}
+
+.copernicus-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.eu-stars {
+  color: #ffd33d;
+
+  font-size: 15px;
+  letter-spacing: -3px;
+}
+
+.copernicus-brand small {
+  display: block;
+
+  color: #d9e4e8;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.copernicus-brand strong {
+  display: block;
+
+  color: #28c9fa;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 31px;
+
+  margin: 0 18px;
+
+  background: rgba(190, 210, 220, 0.3);
+}
+
+.mercator-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mercator-brand strong {
+  color: #e6edf0;
+
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.mercator-brand small {
+  color: #7d8e96;
+
+  font-size: 8px;
+  letter-spacing: 1.1px;
+}
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+.variables-panel {
+  position: absolute;
+
+  top: 124px;
+  left: 32px;
+
+  width: 233px;
+
+  padding: 18px 14px 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 20, 31, 0.93),
+      rgba(1, 13, 22, 0.82)
+    );
+
+  border: 1px solid rgba(0, 178, 225, 0.34);
+  border-radius: 15px;
+
+  z-index: 20;
+
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+.variables-title {
+  padding: 0 9px 11px;
+
+  color: #6c99a8;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+.variables-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.variable-item {
+  position: relative;
+
+  width: 100%;
+  height: 51px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0 9px;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #92a8b1;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-size: 14px;
+}
+
+.variable-item:hover {
+  background: rgba(0, 177, 222, 0.07);
+  color: #dceff5;
+}
+
+.variable-item.active {
+  background: rgba(0, 105, 146, 0.27);
+
+  border-color: rgba(0, 184, 238, 0.55);
+
+  color: #edf9fc;
+
+  box-shadow:
+    inset 3px 0 0 #10d4ff;
+}
+
+.variable-icon {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(100, 150, 170, 0.28);
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   COLOR SCALE
+========================================================= */
+
+.color-scale {
+  position: absolute;
+
+  top: 158px;
+  right: 32px;
+
+  width: 137px;
+  height: 281px;
+
+  padding: 14px 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 18, 28, 0.92),
+      rgba(1, 12, 20, 0.82)
+    );
+
+  border: 1px solid rgba(0, 169, 215, 0.24);
+
+  border-radius: 15px;
+
+  z-index: 20;
+}
+
+.scale-title {
+  color: #89a3ac;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.9px;
+
+  margin-bottom: 9px;
+}
+
+.scale-content {
+  height: 213px;
+
+  display: flex;
+  align-items: stretch;
+
+  gap: 10px;
+}
+
+.gradient-scale {
+  width: 15px;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #a40000 0%,
+      #ed3d16 14%,
+      #ff9b24 28%,
+      #f9dd43 42%,
+      #73dc54 57%,
+      #18cfc0 69%,
+      #078dd6 82%,
+      #073d9f 100%
+    );
+
+  box-shadow:
+    0 0 8px rgba(0, 174, 255, 0.2);
+}
+
+.scale-values {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 1px 0;
+
+  color: #a9bdc5;
+
+  font-size: 10px;
+}
+
+.scale-unit {
+  margin-top: 5px;
+
+  color: #77939e;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   INSTRUMENT SELECTOR
+========================================================= */
+
+.instrument-selector {
+  position: absolute;
+
+  right: 32px;
+  bottom: 135px;
+
+  width: 197px;
+
+  padding: 12px 10px 11px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 20, 30, 0.94),
+      rgba(1, 12, 20, 0.88)
+    );
+
+  border: 1px solid rgba(0, 174, 220, 0.28);
+
+  border-radius: 15px;
+
+  z-index: 20;
+}
+
+.instrument-title {
+  padding: 0 7px 8px;
+
+  color: #6d929d;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.instrument-item {
+  width: 100%;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 8px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #91a8b2;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  text-align: left;
+}
+
+.instrument-item:hover {
+  color: #e5f7fc;
+  background: rgba(0, 172, 220, 0.08);
+}
+
+.instrument-item.active {
+  color: #eafaff;
+
+  background: rgba(0, 111, 151, 0.25);
+}
+
+.instrument-radio {
+  width: 14px;
+  height: 14px;
+
+  border: 1px solid #23657a;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+
+  position: relative;
+}
+
+.instrument-radio.active {
+  border-color: #17d8ff;
+
+  box-shadow:
+    0 0 6px rgba(0, 210, 255, 0.45);
+}
+
+.instrument-radio.active::after {
+  content: "";
+
+  position: absolute;
+
+  width: 6px;
+  height: 6px;
+
+  top: 3px;
+  left: 3px;
+
+  border-radius: 50%;
+
+  background: #23d7ff;
+
+  box-shadow:
+    0 0 6px #23d7ff;
+}
+
+.instrument-symbol {
+  width: 17px;
+
+  color: #62dcf4;
+
+  text-align: center;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   SELECTED STATUS
+========================================================= */
+
+.selected-status {
+  position: absolute;
+
+  left: 32px;
+  bottom: 91px;
+
+  width: 155px;
+
+  padding: 10px 13px;
+
+  background:
+    rgba(2, 17, 27, 0.9);
+
+  border: 1px solid rgba(0, 172, 220, 0.25);
+
+  border-radius: 10px;
+
+  z-index: 20;
+}
+
+.status-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #557984;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+}
+
+.status-value {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #d8eef3;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #0fd7ff;
+
+  box-shadow:
+    0 0 9px #0fd7ff;
+}
+
+/* =========================================================
+   SELECTED INSTRUMENT CARD
+========================================================= */
+
+.selected-instrument-card {
+  position: absolute;
+
+  left: 282px;
+  bottom: 94px;
+
+  width: 316px;
+
+  padding: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 23, 35, 0.97),
+      rgba(1, 15, 24, 0.97)
+    );
+
+  border: 1px solid rgba(0, 189, 240, 0.42);
+
+  border-radius: 14px;
+
+  z-index: 40;
+
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.55);
+}
+
+.close-instrument {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid rgba(150, 190, 200, 0.25);
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: #89a3ad;
+
+  cursor: pointer;
+
+  font-size: 20px;
+  line-height: 1;
+}
+
+.close-instrument:hover {
+  color: white;
+
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.instrument-card-type {
+  color: #27cce9;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.selected-instrument-card h2 {
+  margin: 5px 0 14px;
+
+  color: #ecf8fb;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.instrument-card-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px 18px;
+
+  padding-top: 13px;
+
+  border-top: 1px solid rgba(100, 170, 185, 0.15);
+}
+
+.instrument-card-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.instrument-card-grid span {
+  color: #527783;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.instrument-card-grid strong {
+  color: #dceef2;
+
+  font-size: 11px;
+}
+
+.instrument-card-grid .status-active {
+  color: #36e59a;
+}
+
+.open-analysis-button {
+  width: 100%;
+
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 15px;
+
+  padding: 0 13px;
+
+  border: 1px solid #00bce8;
+
+  border-radius: 8px;
+
+  background: rgba(0, 117, 157, 0.3);
+
+  color: #e7fbff;
+
+  cursor: pointer;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.6px;
+}
+
+.open-analysis-button:hover {
+  background: rgba(0, 156, 204, 0.42);
+
+  box-shadow:
+    0 0 18px rgba(0, 193, 239, 0.15);
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline {
+  position: absolute;
+
+  left: 50%;
+  bottom: 28px;
+
+  transform: translateX(-50%);
+
+  width: min(810px, 52vw);
+  min-width: 600px;
+
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 9px 12px;
+
+  background:
+    rgba(2, 18, 29, 0.91);
+
+  border: 1px solid rgba(0, 168, 217, 0.28);
+
+  border-radius: 14px;
+
+  z-index: 20;
+}
+
+.timeline-controls {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding-right: 14px;
+}
+
+.timeline-arrow,
+.timeline-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(50, 130, 155, 0.35);
+
+  color: #aac3cc;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+}
+
+.timeline-arrow {
+  width: 31px;
+  height: 31px;
+
+  border-radius: 7px;
+
+  font-size: 20px;
+}
+
+.timeline-play {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  color: #32d8ff;
+
+  border-color: rgba(0, 194, 240, 0.55);
+
+  background: rgba(0, 101, 135, 0.15);
+
+  font-size: 13px;
+}
+
+.timeline-arrow:hover,
+.timeline-play:hover {
+  background: rgba(0, 175, 220, 0.14);
+
+  color: white;
+}
+
+.timeline-main {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.timeline-months {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 5px;
+}
+
+.timeline-month {
+  border: none;
+
+  background: transparent;
+
+  color: #607c86;
+
+  cursor: pointer;
+
+  font-size: 9px;
+}
+
+.timeline-month:hover {
+  color: #b8d9e2;
+}
+
+.timeline-month.active {
+  color: #22d8ff;
+
+  font-weight: 800;
+}
+
+.timeline-track {
+  position: relative;
+
+  height: 9px;
+}
+
+.timeline-line {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 4px;
+
+  height: 2px;
+
+  background: rgba(85, 130, 145, 0.25);
+}
+
+.timeline-progress {
+  position: absolute;
+
+  left: 0;
+  top: 4px;
+
+  height: 2px;
+
+  background: #16c7ef;
+
+  box-shadow:
+    0 0 7px rgba(0, 205, 255, 0.7);
+}
+
+.timeline-knob {
+  position: absolute;
+
+  top: 0;
+
+  width: 9px;
+  height: 9px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: #47ddff;
+
+  box-shadow:
+    0 0 10px rgba(30, 220, 255, 0.9);
+}
+
+.timeline-date {
+  text-align: center;
+
+  margin-top: 1px;
+
+  color: #809ba5;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   QUALITY
+========================================================= */
+
+.quality-column {
+  position: absolute;
+
+  right: 243px;
+  bottom: 29px;
+
+  width: 168px;
+  height: 44px;
+
+  display: flex;
+
+  padding: 5px;
+
+  background:
+    rgba(2, 18, 28, 0.9);
+
+  border: 1px solid rgba(0, 161, 210, 0.25);
+
+  border-radius: 9px;
+
+  z-index: 20;
+}
+
+.quality-row {
+  display: flex;
+
+  flex: 1;
+
+  gap: 3px;
+}
+
+.quality-row button {
+  flex: 1;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #718b95;
+
+  cursor: pointer;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.quality-row button:hover {
+  color: #dceff4;
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.quality-row button.active {
+  color: white;
+
+  background: #087ead;
+
+  box-shadow:
+    0 0 9px rgba(0, 186, 235, 0.25);
+}
+
+/* =========================================================
+   CREDITS
+========================================================= */
+
+.credits-button {
+  position: absolute;
+
+  left: 32px;
+  bottom: 31px;
+
+  height: 36px;
+
+  padding: 0 13px;
+
+  border: 1px solid rgba(0, 150, 195, 0.25);
+
+  border-radius: 8px;
+
+  background:
+    rgba(2, 17, 27, 0.88);
+
+  color: #7e9ca6;
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  z-index: 20;
+}
+
+.credits-button:hover {
+  color: #d8f6fc;
+
+  border-color: rgba(0, 188, 230, 0.5);
+}
+
+.credits-popup {
+  position: absolute;
+
+  left: 32px;
+  bottom: 75px;
+
+  width: 270px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  padding: 14px;
+
+  background:
+    rgba(2, 19, 29, 0.96);
+
+  border: 1px solid rgba(0, 178, 225, 0.35);
+
+  border-radius: 10px;
+
+  z-index: 60;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.credits-popup strong {
+  color: #dff7fc;
+
+  font-size: 11px;
+}
+
+.credits-popup span {
+  color: #78949e;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   SYSTEM TITLE
+========================================================= */
+
+.explorer-system-title {
+  position: absolute;
+
+  top: 102px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: rgba(32, 151, 184, 0.23);
+
+  font-size: 9px;
+
+  letter-spacing: 3px;
+
+  white-space: nowrap;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   ACTIVE VARIABLE
+========================================================= */
+
+.active-variable-status {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, 160px);
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 5px 10px;
+
+  color: rgba(113, 199, 219, 0.45);
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+.active-variable-dot {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #13c9ef;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.explorer-loading {
+  position: fixed;
+
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  background: #01070d;
+
+  color: #2fd8ff;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  z-index: 100;
+}
+
+.loading-ring {
+  width: 35px;
+  height: 35px;
+
+  border: 2px solid rgba(0, 207, 255, 0.2);
+  border-top-color: #14d4ff;
+
+  border-radius: 50%;
+
+  animation:
+    explorer-spin 0.9s linear infinite;
+}
+
+@keyframes explorer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+  .search-container {
+    width: 390px;
+  }
+
+  .variables-panel {
+    width: 215px;
+  }
+
+  .color-scale {
+    right: 22px;
+  }
+
+  .instrument-selector {
+    right: 22px;
+  }
+
+  .selected-instrument-card {
+    left: 260px;
+  }
+
+  .quality-column {
+    right: 210px;
+  }
+}
+
+/* =========================================================
+   SMALL HEIGHT
+========================================================= */
+
+@media (max-height: 720px) {
+  .variables-panel {
+    top: 105px;
+  }
+
+  .color-scale {
+    top: 125px;
+    height: 245px;
+  }
+
+  .scale-content {
+    height: 175px;
+  }
+
+  .instrument-selector {
+    bottom: 110px;
+  }
+
+  .selected-status {
+    bottom: 76px;
+  }
+
+  .selected-instrument-card {
+    bottom: 80px;
+  }
+}
+
+/* =========================================================
+   UPLOAD DATASET BUTTON
+========================================================= */
+
+.upload-dataset-button {
+  position: fixed;
+
+  top: 32px;
+  right: 360px;
+
+  height: 52px;
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  border: 1px solid rgba(25, 217, 255, 0.55);
+
+  border-radius: 10px;
+
+  background:
+    rgba(3, 25, 37, 0.88);
+
+  color: #d9f7ff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 0 18px
+    rgba(0, 188, 255, 0.08);
+
+  z-index: 50;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.upload-dataset-button:hover {
+  background:
+    rgba(4, 54, 75, 0.95);
+
+  border-color:
+    #19d9ff;
+
+  box-shadow:
+    0 0 24px
+    rgba(25, 217, 255, 0.2);
+
+  transform:
+    translateY(-1px);
+}
+
+.upload-icon {
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    rgba(25, 217, 255, 0.7);
+
+  border-radius: 6px;
+
+  color: #35dcff;
+
+  font-size: 16px;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   DATASET MESSAGE
+========================================================= */
+
+.dataset-message {
+  position: fixed;
+
+  top: 96px;
+  right: 360px;
+
+  padding: 9px 14px;
+
+  border-radius: 8px;
+
+  background:
+    rgba(2, 22, 32, 0.92);
+
+  border: 1px solid
+    rgba(25, 217, 255, 0.35);
+
+  color: #9fdceb;
+
+  font-size: 10px;
+
+  letter-spacing: 0.3px;
+
+  z-index: 60;
+
+  backdrop-filter: blur(10px);
+}
+
+.dataset-message.success {
+  color: #6ff5cf;
+
+  border-color:
+    rgba(54, 235, 181, 0.35);
+}
+
+.dataset-message.error {
+  color: #ff8f8f;
+
+  border-color:
+    rgba(255, 80, 80, 0.45);
+
+  max-width: 360px;
+}
+
+/* =========================================================
+   MOBILE / SMALL SCREEN
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .upload-dataset-button {
+    top: 24px;
+    right: 240px;
+  }
+
+  .dataset-message {
+    right: 240px;
+  }
+
+}
+
+@media (max-width: 800px) {
+
+  .upload-dataset-button {
+    top: 90px;
+    right: 20px;
+  }
+
+  .dataset-message {
+    top: 150px;
+    right: 20px;
+    max-width: 300px;
+  }
+
+}
+
+/* =========================================================
+   UPLOAD DATASET
+========================================================= */
+
+.upload-wrapper {
+  position: absolute;
+  top: 32px;
+  right: 330px;
+  z-index: 50;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  gap: 8px;
+}
+
+.upload-dataset-button {
+  height: 48px;
+
+  padding: 0 18px;
+
+  border: 1px solid rgba(25, 210, 255, 0.65);
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 37, 53, 0.95),
+      rgba(2, 18, 28, 0.95)
+    );
+
+  color: #dff9ff;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 18px rgba(0, 191, 255, 0.08);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.upload-dataset-button:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 61, 84, 0.98),
+      rgba(3, 29, 42, 0.98)
+    );
+
+  border-color: #16d9ff;
+
+  transform: translateY(-1px);
+}
+
+.upload-icon {
+  color: #18d9ff;
+  font-size: 19px;
+  line-height: 1;
+}
+
+.upload-status {
+  max-width: 280px;
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  background: rgba(1, 18, 28, 0.9);
+
+  border: 1px solid rgba(24, 216, 255, 0.25);
+
+  color: #8daab7;
+
+  font-size: 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.upload-status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #23df9a;
+
+  box-shadow:
+    0 0 9px rgba(35, 223, 154, 0.8);
+}
+
+.upload-message {
+  max-width: 300px;
+
+  padding: 9px 12px;
+
+  border-radius: 8px;
+
+  background: rgba(1, 12, 20, 0.94);
+
+  border: 1px solid rgba(25, 210, 255, 0.22);
+
+  color: #78a6b7;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   UPLOAD DATASET INSIDE VARIABLES PANEL
+========================================================= */
+
+.variables-upload {
+  margin-top: 1px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(25, 217, 255, 0.12);
+}
+
+.variables-upload .upload-wrapper {
+  width: 100%;
+}
+
+.variables-upload .upload-dataset-button {
+  width: 100%;
+  min-height: 42px;
+  justify-content: center;
+}
+
+.variables-upload .upload-status {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.variables-upload .upload-message {
+  margin-top: 8px;
+  width: 100%;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+/* =========================================================
+   EXPLORER BOTTOM UI FIX
+   Only layout/positioning fix
+   API / JSX / 3D scene untouched
+========================================================= */
+
+.upload-wrapper {
+  position: relative;
+}
+
+.upload-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+
+  white-space: nowrap;
+
+  max-width: 260px;
+  overflow: hidden;
+}
+
+.upload-status span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   DATASET INSTRUMENT CARD
+========================================================= */
+
+.selected-status {
+  position: absolute;
+
+  left: 40px;
+  bottom: 103px;
+
+  z-index: 80;
+
+  min-width: 175px;
+  max-width: 235px;
+
+  padding: 12px 15px;
+
+  box-sizing: border-box;
+}
+
+.status-value {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+.status-value small {
+  margin-left: 3px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline {
+  position: absolute;
+
+  left: 50%;
+  bottom: 22px;
+
+  transform: translateX(-50%);
+
+  z-index: 70;
+
+  width: min(890px, calc(100vw - 560px));
+
+  height: 86px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   TIMELINE CONTROLS
+========================================================= */
+
+.timeline-controls {
+  flex: 0 0 auto;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-right: 16px;
+}
+
+.timeline-controls button {
+  flex: 0 0 auto;
+}
+
+/* =========================================================
+   TIMELINE MAIN
+========================================================= */
+
+.timeline-main {
+  flex: 1 1 auto;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MONTHS
+========================================================= */
+
+.timeline-months {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 4px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TRACK
+========================================================= */
+
+.timeline-track {
+  position: relative;
+
+  width: 100%;
+
+  height: 14px;
+
+  margin-top: 3px;
+
+  box-sizing: border-box;
+}
+
+.timeline-line {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+.timeline-progress {
+  position: absolute;
+
+  left: 0;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+.timeline-knob {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 3;
+}
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.timeline-date {
+  width: 100%;
+
+  margin-top: 5px;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   QUALITY CONTROLS
+========================================================= */
+
+.quality-column {
+  position: absolute;
+
+  right: 273px;
+  bottom: 22px;
+
+  z-index: 90;
+
+  width: 185px;
+  height: 50px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  gap: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(0, 190, 240, 0.35);
+  border-radius: 10px;
+
+  background: rgba(2, 16, 25, 0.92);
+
+  backdrop-filter: blur(8px);
+}
+
+.quality-row {
+  flex: 1;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+}
+
+.quality-row button {
+  flex: 1;
+
+  height: 38px;
+
+  min-width: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #6f8794;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.quality-row button:hover {
+  color: #ffffff;
+
+  background: rgba(
+    0,
+    180,
+    230,
+    0.12
+  );
+}
+
+.quality-row button.active {
+  color: #ffffff;
+
+  background: #0795c7;
+}
+
+.quality-column {
+  width: 190px;
+}
+
+.quality-column .quality-row {
+  flex: 1 1 50%;
+}
+
+.quality-column .quality-row:first-child {
+  border-right: 1px solid rgba(
+    0,
+    190,
+    240,
+    0.18
+  );
+}
+
+/* =========================================================
+   CREDITS
+========================================================= */
+
+.credits-button {
+  position: absolute;
+
+  left: 40px;
+  bottom: 34px;
+
+  z-index: 90;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1400px) {
+
+  .timeline {
+    width: min(
+      760px,
+      calc(100vw - 500px)
+    );
+  }
+
+  .quality-column {
+    right: 235px;
+  }
+
+}
+
+@media (max-width: 1150px) {
+
+  .timeline {
+    left: 48%;
+    width: 620px;
+  }
+
+  .quality-column {
+    right: 25px;
+    bottom: 22px;
+  }
+
+  .selected-status {
+    left: 25px;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .timeline {
+    left: 20px;
+    right: 20px;
+
+    width: auto;
+
+    transform: none;
+
+    bottom: 78px;
+  }
+
+  .quality-column {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .selected-status {
+    left: 20px;
+    bottom: 20px;
+  }
+
+}
+
+/* =========================================================
+   FIX: QUALITY CONTROLS OVERLAPPING TIMELINE
+========================================================= */
+
+.quality-column {
+  position: fixed !important;
+
+  right: 38px !important;
+  bottom: 24px !important;
+
+  z-index: 50 !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  border: 1px solid rgba(0, 210, 255, 0.35) !important;
+  border-radius: 12px !important;
+
+  background: rgba(2, 17, 27, 0.94) !important;
+
+  backdrop-filter: blur(12px);
+
+  overflow: hidden;
+}
+
+.quality-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+
+  width: auto !important;
+  height: 48px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.quality-row button {
+  min-width: 58px !important;
+  height: 48px !important;
+
+  padding: 0 16px !important;
+  margin: 0 !important;
+
+  border: none !important;
+  border-right: 1px solid rgba(0, 210, 255, 0.18) !important;
+
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  color: #7895a5 !important;
+
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.4px !important;
+
+  cursor: pointer !important;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.quality-row:last-child button:last-child {
+  border-right: none !important;
+}
+
+.quality-row button.active {
+  background: #0796c8 !important;
+  color: #ffffff !important;
+
+  box-shadow:
+    inset 0 0 18px rgba(0, 210, 255, 0.18);
+}
+
+.quality-row button:hover {
+  background: rgba(0, 150, 200, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   FIX TIMELINE
+========================================================= */
+
+.timeline {
+  position: fixed !important;
+
+  left: 50% !important;
+  bottom: 24px !important;
+
+  transform: translateX(-50%) !important;
+
+  width: min(
+    900px,
+    calc(100vw - 560px)
+  ) !important;
+
+  z-index: 30 !important;
+}
+
+.timeline-main {
+  min-width: 0 !important;
+}
+
+/* =========================================================
+   UPLOAD STATUS
+========================================================= */
+
+.upload-status {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+
+  white-space: nowrap !important;
+}
+
+.upload-message {
+  white-space: nowrap !important;
+  max-width: 320px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .timeline {
+    width: calc(100vw - 420px) !important;
+  }
+
+  .quality-column {
+    right: 20px !important;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .timeline {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 90px !important;
+
+    width: auto !important;
+
+    transform: none !important;
+  }
+
+  .quality-column {
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+
+}
+
+/* =========================================================
+   FINAL RIGHT-SIDE LAYOUT FIX
+========================================================= */
+
+/* =========================
+   COLOR SCALE
+========================= */
+
+.color-scale {
+  position: absolute !important;
+
+  top: 185px !important;
+  right: 40px !important;
+
+  width: 105px !important;
+  min-width: 105px !important;
+
+  height: 150px !important;
+  min-height: 150px !important;
+
+  padding: 12px 10px !important;
+
+  box-sizing: border-box !important;
+
+  z-index: 20 !important;
+
+  overflow: hidden !important;
+}
+
+.color-scale .scale-title {
+  font-size: 9px !important;
+
+  letter-spacing: 1px !important;
+
+  line-height: 1 !important;
+
+  margin: 0 0 9px 0 !important;
+
+  white-space: nowrap !important;
+}
+
+.color-scale .scale-content {
+  display: flex !important;
+
+  flex-direction: row !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  gap: 7px !important;
+
+  height: 108px !important;
+}
+
+.color-scale .gradient-scale {
+  width: 15px !important;
+  min-width: 15px !important;
+
+  height: 108px !important;
+
+  border-radius: 8px !important;
+
+  flex-shrink: 0 !important;
+}
+
+.color-scale .scale-values {
+  height: 108px !important;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  justify-content: space-between !important;
+
+  font-size: 9px !important;
+
+  line-height: 1 !important;
+}
+
+.color-scale .scale-unit {
+  margin-top: 5px !important;
+
+  font-size: 8px !important;
+
+  line-height: 1 !important;
+
+  text-align: center !important;
+
+  white-space: nowrap !important;
+}
+
+/* =========================================================
+   INSTRUMENTS PANEL
+========================================================= */
+
+.instrument-selector {
+  position: absolute;
+  right: 2.2%;
+  top: 48%;
+  width: 250px;
+
+  height: auto;
+  min-height: 0;
+  max-height: none;
+
+  padding: 14px 12px 12px;
+
+  box-sizing: border-box;
+  z-index: 20;
+
+  overflow: hidden;
+}
+
+.instrument-selector h3,
+.instrument-selector .panel-title {
+  margin: 0 0 10px;
+  padding-left: 6px;
+}
+
+.instrument-selector .instrument-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.instrument-selector .instrument-option {
+  min-height: 32px;
+  height: 32px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+.instrument-selector .instrument-option span {
+  line-height: 1;
+}
+
+.instrument-selector .instrument-option > * {
+  flex-shrink: 0;
+}
+
+.instrument-selector .instrument-option.active {
+  min-height: 32px;
+  height: 32px;
+}
+
+/* =========================================================
+   KEEP BOTTOM CONTROLS
+========================================================= */
+
+.quality-column {
+  z-index: 50 !important;
+}
+
+.timeline {
+  z-index: 25 !important;
+}
+
+/* =========================================================
+   DATASET STATUS
+========================================================= */
+
+.selected-status {
+  z-index: 35 !important;
+}
+
+/* =========================================================
+   UPLOAD STATUS
+========================================================= */
+
+.upload-status {
+  max-width: 210px !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
+
+  white-space: nowrap !important;
+}
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .color-scale {
+    top: 170px !important;
+    right: 25px !important;
+
+    width: 95px !important;
+    min-width: 95px !important;
+
+    height: 140px !important;
+    min-height: 140px !important;
+  }
+
+  .color-scale .gradient-scale {
+    height: 100px !important;
+  }
+
+  .color-scale .scale-content,
+  .color-scale .scale-values {
+    height: 100px !important;
+  }
+
+  .instrument-selector {
+    top: 335px !important;
+    right: 25px !important;
+
+    width: 200px !important;
+  }
+}
+
+/* =========================================================
+   UPLOAD DATASET - SELECT INSTRUMENT
+   HORIZONTAL LAYOUT
+========================================================= */
+
+[class*="type-selector"],
+[class*="instrument-selector-modal"],
+[class*="upload-selector"],
+[class*="upload-type-selector"],
+[class*="dataset-upload"],
+[class*="upload-modal"] {
+  box-sizing: border-box !important;
+}
+
+[class*="type-selector"],
+[class*="instrument-selector-modal"],
+[class*="upload-selector"],
+[class*="upload-type-selector"] {
+  width: min(900px, 90vw) !important;
+  max-width: 900px !important;
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   FORCE INSTRUMENT OPTIONS INTO GRID
+========================================================= */
+
+[class*="type-selector"] > div,
+[class*="type-selector"] > section,
+
+[class*="instrument-selector-modal"] > div,
+[class*="instrument-selector-modal"] > section,
+
+[class*="upload-selector"] > div,
+[class*="upload-selector"] > section,
+
+[class*="upload-type-selector"] > div,
+[class*="upload-type-selector"] > section {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+
+  width: 100% !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   NESTED INSTRUMENT OPTION CONTAINERS
+========================================================= */
+
+[class*="type-selector"] [class*="instrument"],
+[class*="type-selector"] [class*="option"],
+
+[class*="instrument-selector-modal"] [class*="instrument"],
+[class*="instrument-selector-modal"] [class*="option"],
+
+[class*="upload-selector"] [class*="instrument"],
+[class*="upload-selector"] [class*="option"],
+
+[class*="upload-type-selector"] [class*="instrument"],
+[class*="upload-type-selector"] [class*="option"] {
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   UPLOAD MODAL BUTTONS
+========================================================= */
+
+[class*="type-selector"] button,
+[class*="instrument-selector-modal"] button,
+[class*="upload-selector"] button,
+[class*="upload-type-selector"] button {
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  min-height: 70px !important;
+
+  height: auto !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box !important;
+
+  white-space: normal !important;
+
+  flex: none !important;
+}
+
+/* =========================================================
+   IF BUTTONS ARE DIRECT CHILDREN OF MODAL
+========================================================= */
+
+[class*="upload-modal"] > div,
+[class*="dataset-upload"] > div {
+  box-sizing: border-box !important;
+}
+
+/* Inner option lists */
+[class*="upload-modal"] [class*="option"],
+[class*="upload-modal"] [class*="instrument"],
+[class*="upload-modal"] [class*="list"],
+
+[class*="dataset-upload"] [class*="option"],
+[class*="dataset-upload"] [class*="instrument"],
+[class*="dataset-upload"] [class*="list"] {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+
+  width: 100% !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   INDIVIDUAL UPLOAD INSTRUMENT CARDS
+========================================================= */
+
+[class*="upload-modal"] [class*="option"] button,
+[class*="upload-modal"] [class*="instrument"] button,
+[class*="upload-modal"] [class*="list"] button,
+
+[class*="dataset-upload"] [class*="option"] button,
+[class*="dataset-upload"] [class*="instrument"] button,
+[class*="dataset-upload"] [class*="list"] button {
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  min-height: 72px !important;
+
+  height: auto !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
+
+[class*="upload-modal"] > div,
+[class*="dataset-upload"] > div {
+  width: 100% !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   MODAL HEADING
+========================================================= */
+
+[class*="upload-modal"] h1,
+[class*="upload-modal"] h2,
+[class*="upload-modal"] h3,
+
+[class*="dataset-upload"] h1,
+[class*="dataset-upload"] h2,
+[class*="dataset-upload"] h3 {
+  width: 100% !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+[class*="upload-modal"] [class*="footer"],
+[class*="upload-modal"] [class*="actions"],
+
+[class*="dataset-upload"] [class*="footer"],
+[class*="dataset-upload"] [class*="actions"] {
+  width: 100% !important;
+
+  display: flex !important;
+
+  flex-direction: row !important;
+
+  justify-content: flex-end !important;
+
+  align-items: center !important;
+
+  gap: 10px !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   RESPONSIVE - UPLOAD MODAL
+========================================================= */
+
+@media (max-width: 900px) {
+
+  [class*="type-selector"] > div,
+  [class*="type-selector"] > section,
+
+  [class*="instrument-selector-modal"] > div,
+  [class*="instrument-selector-modal"] > section,
+
+  [class*="upload-selector"] > div,
+  [class*="upload-selector"] > section,
+
+  [class*="upload-type-selector"] > div,
+  [class*="upload-type-selector"] > section,
+
+  [class*="upload-modal"] [class*="option"],
+  [class*="upload-modal"] [class*="instrument"],
+  [class*="upload-modal"] [class*="list"],
+
+  [class*="dataset-upload"] [class*="option"],
+  [class*="dataset-upload"] [class*="instrument"],
+  [class*="dataset-upload"] [class*="list"] {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 10px !important;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  [class*="type-selector"] > div,
+  [class*="type-selector"] > section,
+
+  [class*="instrument-selector-modal"] > div,
+  [class*="instrument-selector-modal"] > section,
+
+  [class*="upload-selector"] > div,
+  [class*="upload-selector"] > section,
+
+  [class*="upload-type-selector"] > div,
+  [class*="upload-type-selector"] > section,
+
+  [class*="upload-modal"] [class*="option"],
+  [class*="upload-modal"] [class*="instrument"],
+  [class*="upload-modal"] [class*="list"],
+
+  [class*="dataset-upload"] [class*="option"],
+  [class*="dataset-upload"] [class*="instrument"],
+  [class*="dataset-upload"] [class*="list"] {
+    grid-template-columns: 1fr !important;
+  }
+
+}
+
+/* =========================================================
+   FINAL FIX
+   UPLOAD DATASET -> SELECT INSTRUMENT MODAL
+   CSS ONLY - NO JSX / NO API CHANGE
+========================================================= */
+
+/*
+   The UploadDataset modal itself has no className.
+   Therefore the previous class-based selectors cannot
+   reliably target the actual modal.
+
+   This targets only the fixed modal overlay inside
+   .explorer-page.
+*/
+
+.explorer-page
+  > div[style*="position: fixed"] {
+  box-sizing: border-box !important;
+}
+
+/* Modal box */
+.explorer-page
+  > div[style*="position: fixed"]
+  > div {
+  width: min(900px, 88vw) !important;
+  max-width: 900px !important;
+
+  min-width: 760px !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   INSTRUMENT BUTTON GROUP
+========================================================= */
+
+/*
+   Instrument buttons have no className.
+   Force buttons to sit horizontally instead of
+   inheriting the inline vertical layout.
+*/
+
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  > div:has(> button) {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+
+  width: 100% !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   INSTRUMENT BUTTONS
+========================================================= */
+
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  > div:has(> button)
+  > button {
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  min-height: 72px !important;
+
+  height: auto !important;
+
+  margin: 0 !important;
+
+  padding: 14px !important;
+
+  box-sizing: border-box !important;
+
+  display: flex !important;
+
+  flex-direction: row !important;
+
+  align-items: center !important;
+
+  text-align: left !important;
+
+  white-space: normal !important;
+
+  flex: none !important;
+}
+
+/* =========================================================
+   IF OPTIONS ARE DIRECT CHILDREN OF MODAL
+========================================================= */
+
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  > button {
+  width: calc(25% - 9px) !important;
+
+  min-width: 0 !important;
+
+  min-height: 72px !important;
+
+  height: auto !important;
+
+  margin: 6px 4px !important;
+
+  box-sizing: border-box !important;
+
+  display: inline-flex !important;
+
+  vertical-align: top !important;
+
+  flex-direction: row !important;
+
+  align-items: center !important;
+
+  text-align: left !important;
+
+  white-space: normal !important;
+}
+
+/* =========================================================
+   MODAL WIDTH / HEIGHT
+========================================================= */
+
+.explorer-page
+  > div[style*="position: fixed"]
+  > div {
+  max-height: 82vh !important;
+
+  overflow-y: auto !important;
+
+  overflow-x: hidden !important;
+}
+
+/* =========================================================
+   KEEP MODAL TEXT NORMAL
+========================================================= */
+
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  h1,
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  h2,
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  h3,
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  p {
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   MODAL BUTTON SPANS
+========================================================= */
+
+.explorer-page
+  > div[style*="position: fixed"]
+  > div
+  > div:has(> button)
+  > button
+  span {
+  min-width: 0 !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   RESPONSIVE MODAL
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .explorer-page
+    > div[style*="position: fixed"]
+    > div {
+    width: 92vw !important;
+
+    min-width: 0 !important;
+
+    max-width: 92vw !important;
+  }
+
+  .explorer-page
+    > div[style*="position: fixed"]
+    > div
+    > div:has(> button) {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 10px !important;
+  }
+
+  .explorer-page
+    > div[style*="position: fixed"]
+    > div
+    > button {
+    width: calc(50% - 12px) !important;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .explorer-page
+    > div[style*="position: fixed"]
+    > div {
+    width: 94vw !important;
+
+    min-width: 0 !important;
+
+    max-width: 94vw !important;
+  }
+
+  .explorer-page
+    > div[style*="position: fixed"]
+    > div
+    > div:has(> button) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .explorer-page
+    > div[style*="position: fixed"]
+    > div
+    > button {
+    width: 100% !important;
+
+    margin: 5px 0 !important;
+  }
+
+}
+
+
+/* =========================================================
+   UPLOAD DATASET - INSTRUMENT SELECTOR
+   FORCE HORIZONTAL GRID
+   ONLY FOR THE UPLOAD MODAL
+========================================================= */
+
+/* Full-screen upload modal */
+.upload-wrapper > div[style*="position: fixed"] {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Modal box */
+.upload-wrapper
+  > div[style*="position: fixed"]
+  > div[style*="width: 360px"] {
+  width: min(920px, 90vw) !important;
+  max-width: 920px !important;
+
+  padding: 26px !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   IMPORTANT:
+   THIS IS THE ACTUAL INSTRUMENT BUTTON CONTAINER
+========================================================= */
+
+.upload-wrapper
+  > div[style*="position: fixed"]
+  > div[style*="width: 360px"]
+  > div[style*="display: grid"] {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr)) !important;
+
+  grid-auto-flow: row !important;
+
+  gap: 12px !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   INSTRUMENT BUTTONS
+========================================================= */
+
+.upload-wrapper
+  > div[style*="position: fixed"]
+  > div[style*="width: 360px"]
+  > div[style*="display: grid"]
+  > button {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  min-height: 78px !important;
+  height: auto !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+
+  padding: 15px 16px !important;
+}
+
+/* Instrument text should stay inside button */
+.upload-wrapper
+  > div[style*="position: fixed"]
+  > div[style*="width: 360px"]
+  > div[style*="display: grid"]
+  > button
+  > span:last-child {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.upload-wrapper
+  > div[style*="position: fixed"]
+  > div[style*="width: 360px"]
+  > button:last-child {
+  width: 100% !important;
+  margin-top: 14px !important;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+  .upload-wrapper
+    > div[style*="position: fixed"]
+    > div[style*="width: 360px"] {
+    width: min(700px, 92vw) !important;
+  }
+
+  .upload-wrapper
+    > div[style*="position: fixed"]
+    > div[style*="width: 360px"]
+    > div[style*="display: grid"] {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+  .upload-wrapper
+    > div[style*="position: fixed"]
+    > div[style*="width: 360px"] {
+    width: 94vw !important;
+    padding: 20px !important;
+  }
+
+  .upload-wrapper
+    > div[style*="position: fixed"]
+    > div[style*="width: 360px"]
+    > div[style*="display: grid"] {
+    grid-template-columns:
+      1fr !important;
+  }
+}

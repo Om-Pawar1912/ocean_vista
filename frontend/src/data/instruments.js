@@ -1,0 +1,61 @@
+export const INSTRUMENTS = [
+  {
+    id: "ARGO-2903671",
+    type: "ARGO",
+    latitude: 17.85,
+    longitude: 86.41,
+    depth: 2000,
+    status: "Active",
+    temperature: 28.9,
+    salinity: 34.21,
+    chlorophyll: 0.84,
+  },
+  {
+    id: "ARGO-2903672",
+    type: "ARGO",
+    latitude: 15.92,
+    longitude: 82.74,
+    depth: 2000,
+    status: "Active",
+    temperature: 28.5,
+    salinity: 34.42,
+    chlorophyll: 0.76,
+  },
+  {
+    id: "ARGO-2903673",
+    type: "ARGO",
+    latitude: 12.64,
+    longitude: 80.31,
+    depth: 1500,
+    status: "Active",
+    temperature: 27.9,
+    salinity: 34.72,
+    chlorophyll: 0.62,
+  },
+  {
+    id: "ARGO-2903674",
+    type: "ARGO",
+    latitude: 9.4,
+    longitude: 77.2,
+    depth: 2000,
+    status: "Active",
+    temperature: 28.24,
+    salinity: 34.8,
+    chlorophyll: 0.91,
+  },
+  {
+    id: "ARGO-2903675",
+    type: "ARGO",
+    latitude: 15.6,
+    longitude: 88.3,
+    depth: 2000,
+    status: "Active",
+    temperature: 26.8,
+    salinity: 35.12,
+    chlorophyll: 0.55,
+  },
+];
+
+export const getInstrument = (id) => {
+  return INSTRUMENTS.find((item) => item.id === id);
+};

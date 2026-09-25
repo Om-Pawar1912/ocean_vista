@@ -1,0 +1,188 @@
+/* =========================================
+   LOGIN REFERENCE SCREEN
+========================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.login-page {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #000;
+  overflow: hidden;
+}
+
+/* =========================================
+   REFERENCE IMAGE
+========================================= */
+
+.login-page .reference-image {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: fill;
+
+  display: block;
+
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* =========================================
+   ALL TRANSPARENT HOTSPOTS
+========================================= */
+
+.login-hotspot {
+  position: absolute;
+
+  z-index: 100;
+
+  display: block;
+
+  padding: 0;
+  margin: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* =========================================
+   USERNAME FIELD
+   Reference:
+   x ≈ 4.5%
+   y ≈ 34.8%
+========================================= */
+
+.login-username {
+  left: 4.5%;
+  top: 34.5%;
+
+  width: 28.8%;
+  height: 5.8%;
+}
+
+/* =========================================
+   PASSWORD FIELD
+========================================= */
+
+.login-password {
+  left: 4.5%;
+  top: 45.3%;
+
+  width: 28.8%;
+  height: 5.8%;
+}
+
+/* =========================================
+   REMEMBER ME CHECKBOX
+========================================= */
+
+.login-remember {
+  left: 4.3%;
+  top: 53.0%;
+
+  width: 2.0%;
+  height: 3.0%;
+}
+
+/* =========================================
+   FORGOT PASSWORD
+========================================= */
+
+.login-forgot {
+  left: 21.8%;
+  top: 52.7%;
+
+  width: 12.0%;
+  height: 4.0%;
+}
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.login-button {
+  left: 4.5%;
+  top: 57.7%;
+
+  width: 28.8%;
+  height: 6.5%;
+}
+
+/* =========================================
+   CONTINUE AS GUEST
+========================================= */
+
+.login-guest {
+  left: 4.5%;
+  top: 66.8%;
+
+  width: 28.8%;
+  height: 6.5%;
+}
+
+/* =========================================
+   LOGIN WITH SSO
+========================================= */
+
+.login-sso {
+  left: 4.5%;
+  top: 78.2%;
+
+  width: 28.8%;
+  height: 6.5%;
+}
+
+/* =========================================
+   OPTIONAL DEBUG
+   Uncomment temporarily if you want
+   to see hotspot positions.
+========================================= */
+
+/*
+.login-hotspot {
+  background: rgba(0, 255, 255, 0.12);
+  outline: 1px solid cyan;
+}
+*/
+
+/* =========================================
+   REMOVE FOCUS BORDER
+========================================= */
+
+.login-hotspot:focus,
+.login-hotspot:active {
+  outline: none;
+}
+
+/* =========================================
+   VERY SUBTLE HOVER
+========================================= */
+
+.login-hotspot:hover {
+  background: rgba(0, 174, 255, 0.025);
+}

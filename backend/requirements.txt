@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+numpy
+pandas
+xarray
+netCDF4
+h5netcdf
+scipy
