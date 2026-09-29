@@ -3226,7 +3226,7 @@ export default function Analysis() {
         <div className="analysis-brand">
 
           <div>
-            OceanVista
+            Trinetra
           </div>
 
           <div>

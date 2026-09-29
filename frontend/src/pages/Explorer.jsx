@@ -1806,7 +1806,7 @@ function CreditsButton() {
           </strong>
 
           <span>
-            OceanVista
+            Trinetra
           </span>
 
           <span>
