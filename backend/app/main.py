@@ -58,7 +58,7 @@ app.add_middleware(
         FRONTEND_URL,
         "http://127.0.0.1:5173",
         "http://localhost:5173",
-        "https://ocean-vista-ten.vercel.app",
+        "https://ocean-vista.onrender.com",
         
     ],
     allow_credentials=True,
