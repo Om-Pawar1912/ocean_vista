@@ -46,7 +46,7 @@ import "leaflet/dist/leaflet.css";
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
-  "http://127.0.0.1:8000";
+  "https://ocean-vista-1.onrender.com";
 
 /* =========================================================
    CONSTANTS
