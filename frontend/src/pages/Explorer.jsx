@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 import "../styles/explorer.css";
 
-const API_BASE_URL = "https://ocean-vista.onrender.com";
+const API_BASE_URL = "https://ocean-vista-1.onrender.com";
 
 /* =========================================================
    VARIABLES
