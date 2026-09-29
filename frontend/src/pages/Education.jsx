@@ -418,10 +418,6 @@ function getLocalAnswer(
     EDUCATION_DATA[detectedTopic] ||
     EDUCATION_DATA.Temperature;
 
-  /*
-    Exact predefined question
-  */
-
   for (
     const predefinedQuestion
     of topicData.questions
@@ -435,15 +431,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          predefinedQuestion
+            predefinedQuestion
           ],
       };
     }
   }
-
-  /*
-    Temperature
-  */
 
   if (
     detectedTopic ===
@@ -461,7 +453,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why is it important?"
+            "Why is it important?"
           ],
       };
     }
@@ -484,7 +476,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How is it measured?"
+            "How is it measured?"
           ],
       };
     }
@@ -504,15 +496,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How does temperature change with depth?"
+            "How does temperature change with depth?"
           ],
       };
     }
   }
-
-  /*
-    Salinity
-  */
 
   if (
     detectedTopic ===
@@ -530,7 +518,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why is salinity important?"
+            "Why is salinity important?"
           ],
       };
     }
@@ -550,15 +538,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How is salinity measured?"
+            "How is salinity measured?"
           ],
       };
     }
   }
-
-  /*
-    Currents
-  */
 
   if (
     detectedTopic ===
@@ -582,7 +566,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How are currents measured?"
+            "How are currents measured?"
           ],
       };
     }
@@ -599,15 +583,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why are ocean currents important?"
+            "Why are ocean currents important?"
           ],
       };
     }
   }
-
-  /*
-    Chlorophyll
-  */
 
   if (
     detectedTopic ===
@@ -631,7 +611,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How is chlorophyll measured?"
+            "How is chlorophyll measured?"
           ],
       };
     }
@@ -651,15 +631,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What does chlorophyll tell us?"
+            "What does chlorophyll tell us?"
           ],
       };
     }
   }
-
-  /*
-    Waves
-  */
 
   if (
     detectedTopic ===
@@ -683,7 +659,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How are waves measured?"
+            "How are waves measured?"
           ],
       };
     }
@@ -700,15 +676,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What affects wave height?"
+            "What affects wave height?"
           ],
       };
     }
   }
-
-  /*
-    Sea Ice
-  */
 
   if (
     detectedTopic ===
@@ -726,7 +698,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why is sea ice important?"
+            "Why is sea ice important?"
           ],
       };
     }
@@ -743,15 +715,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How does sea ice affect the ocean?"
+            "How does sea ice affect the ocean?"
           ],
       };
     }
   }
-
-  /*
-    Argo
-  */
 
   if (
     detectedTopic === "Argo"
@@ -768,7 +736,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How does an Argo float work?"
+            "How does an Argo float work?"
           ],
       };
     }
@@ -785,15 +753,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What data does Argo collect?"
+            "What data does Argo collect?"
           ],
       };
     }
   }
-
-  /*
-    Float
-  */
 
   if (
     detectedTopic ===
@@ -808,7 +772,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How does a float move?"
+            "How does a float move?"
           ],
       };
     }
@@ -825,15 +789,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why are floats useful?"
+            "Why are floats useful?"
           ],
       };
     }
   }
-
-  /*
-    CTD
-  */
 
   if (
     detectedTopic === "CTD"
@@ -850,7 +810,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What does a CTD measure?"
+            "What does a CTD measure?"
           ],
       };
     }
@@ -867,15 +827,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "How does a CTD profile work?"
+            "How does a CTD profile work?"
           ],
       };
     }
   }
-
-  /*
-    BGC
-  */
 
   if (
     detectedTopic === "BGC"
@@ -895,7 +851,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What does BGC-Argo measure?"
+            "What does BGC-Argo measure?"
           ],
       };
     }
@@ -912,15 +868,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why is biogeochemical data important?"
+            "Why is biogeochemical data important?"
           ],
       };
     }
   }
-
-  /*
-    Moorings
-  */
 
   if (
     detectedTopic ===
@@ -935,7 +887,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What do moorings measure?"
+            "What do moorings measure?"
           ],
       };
     }
@@ -952,15 +904,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why are moorings useful?"
+            "Why are moorings useful?"
           ],
       };
     }
   }
-
-  /*
-    HF Radar
-  */
 
   if (
     detectedTopic ===
@@ -978,7 +926,7 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "What does HF Radar measure?"
+            "What does HF Radar measure?"
           ],
       };
     }
@@ -995,15 +943,11 @@ function getLocalAnswer(
         topic: detectedTopic,
         answer:
           topicData.answers[
-          "Why is HF Radar useful?"
+            "Why is HF Radar useful?"
           ],
       };
     }
   }
-
-  /*
-    Generic fallback
-  */
 
   return {
     topic: detectedTopic,
@@ -1210,31 +1154,33 @@ function interpolatePalette(
   return [
     Math.round(
       a[0] +
-      (b[0] - a[0]) *
-      localT
+        (b[0] - a[0]) *
+          localT
     ),
     Math.round(
       a[1] +
-      (b[1] - a[1]) *
-      localT
+        (b[1] - a[1]) *
+          localT
     ),
     Math.round(
       a[2] +
-      (b[2] - a[2]) *
-      localT
+        (b[2] - a[2]) *
+          localT
     ),
   ];
 }
 
-/*
-  This creates an educational visualization
-  texture over the real Earth texture.
-*/
+function createVariableTexture(
+  topic,
+  earthTexture
+) {
+  const config =
+    getVisualConfig(topic);
 
-function createVariableTexture(topic, earthTexture) {
-  const config = getVisualConfig(topic);
-
-  const canvas = document.createElement("canvas");
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
 
   const width = 1024;
   const height = 512;
@@ -1242,28 +1188,30 @@ function createVariableTexture(topic, earthTexture) {
   canvas.width = width;
   canvas.height = height;
 
-  const ctx = canvas.getContext("2d");
+  const ctx =
+    canvas.getContext("2d");
 
   if (!ctx) {
     return null;
   }
 
-  /*
-    ------------------------------------------------------------
-    READ THE ORIGINAL EARTH TEXTURE
-    ------------------------------------------------------------
-    We use the original Earth image to detect ocean pixels.
-    The variable overlay will only have alpha on ocean.
-  */
-
-  const earthCanvas = document.createElement("canvas");
+  const earthCanvas =
+    document.createElement(
+      "canvas"
+    );
 
   earthCanvas.width = width;
   earthCanvas.height = height;
 
-  const earthCtx = earthCanvas.getContext("2d");
+  const earthCtx =
+    earthCanvas.getContext(
+      "2d"
+    );
 
-  if (!earthCtx || !earthTexture?.image) {
+  if (
+    !earthCtx ||
+    !earthTexture?.image
+  ) {
     return null;
   }
 
@@ -1275,41 +1223,49 @@ function createVariableTexture(topic, earthTexture) {
     height
   );
 
-  const earthImage = earthCtx.getImageData(
-    0,
-    0,
-    width,
-    height
-  );
+  const earthImage =
+    earthCtx.getImageData(
+      0,
+      0,
+      width,
+      height
+    );
 
-  /*
-    ------------------------------------------------------------
-    CREATE VARIABLE IMAGE
-    ------------------------------------------------------------
-  */
+  const image =
+    ctx.createImageData(
+      width,
+      height
+    );
 
-  const image = ctx.createImageData(
-    width,
-    height
-  );
-
-  for (let y = 0; y < height; y += 1) {
+  for (
+    let y = 0;
+    y < height;
+    y += 1
+  ) {
     const latitude =
       90 -
-      (y / (height - 1)) *
+      (y /
+        (height - 1)) *
         180;
 
     const latitudeFactor =
       Math.cos(
-        (latitude * Math.PI) / 180
+        (latitude * Math.PI) /
+          180
       );
 
-    for (let x = 0; x < width; x += 1) {
+    for (
+      let x = 0;
+      x < width;
+      x += 1
+    ) {
       const earthIndex =
         (y * width + x) * 4;
 
       const earthR =
-        earthImage.data[earthIndex];
+        earthImage.data[
+          earthIndex
+        ];
 
       const earthG =
         earthImage.data[
@@ -1321,27 +1277,19 @@ function createVariableTexture(topic, earthTexture) {
           earthIndex + 2
         ];
 
-      /*
-        --------------------------------------------------------
-        OCEAN DETECTION
+      const maxRGB =
+        Math.max(
+          earthR,
+          earthG,
+          earthB
+        );
 
-        Ocean is generally more blue than land.
-        Land is generally green/brown.
-        White clouds / ice are excluded.
-        --------------------------------------------------------
-      */
-
-      const maxRGB = Math.max(
-        earthR,
-        earthG,
-        earthB
-      );
-
-      const minRGB = Math.min(
-        earthR,
-        earthG,
-        earthB
-      );
+      const minRGB =
+        Math.min(
+          earthR,
+          earthG,
+          earthB
+        );
 
       const saturation =
         maxRGB === 0
@@ -1353,40 +1301,25 @@ function createVariableTexture(topic, earthTexture) {
         maxRGB > 225;
 
       const isBlueOcean =
-        earthB > earthR * 1.08 &&
-        earthB >= earthG * 0.95;
-
-      /*
-        White clouds / Antarctica / ice
-        should remain original.
-      */
+        earthB >
+          earthR * 1.08 &&
+        earthB >=
+          earthG * 0.95;
 
       const isWhiteSurface =
         saturation < 0.12 &&
         isBright;
 
-      /*
-        Green/brown land is rejected.
-      */
-
       const isLand =
-        earthG > earthB * 1.03 &&
-        earthR > earthB * 1.03;
-
-      /*
-        Final ocean test.
-      */
+        earthG >
+          earthB * 1.03 &&
+        earthR >
+          earthB * 1.03;
 
       const isOcean =
         isBlueOcean &&
         !isWhiteSurface &&
         !isLand;
-
-      /*
-        --------------------------------------------------------
-        DEFAULT TRANSPARENT
-        --------------------------------------------------------
-      */
 
       let r = 0;
       let g = 0;
@@ -1395,13 +1328,10 @@ function createVariableTexture(topic, earthTexture) {
 
       if (isOcean) {
         const longitude =
-          (x / (width - 1)) *
+          (x /
+            (width - 1)) *
             360 -
           180;
-
-        /*
-          Educational variable field
-        */
 
         let value =
           0.50 +
@@ -1412,7 +1342,8 @@ function createVariableTexture(topic, earthTexture) {
         value +=
           Math.sin(
             ((longitude +
-              config.shift * 180) *
+              config.shift *
+                180) *
               Math.PI) /
               70
           ) * 0.12;
@@ -1426,23 +1357,22 @@ function createVariableTexture(topic, earthTexture) {
 
         value +=
           Math.sin(
-            ((longitude + latitude) *
+            ((longitude +
+              latitude) *
               Math.PI) /
               42
           ) * 0.05;
 
-        /*
-          Cooler polar ocean.
-        */
-
         if (
-          Math.abs(latitude) > 60
+          Math.abs(latitude) >
+          60
         ) {
           value *= 0.38;
         }
 
         if (
-          Math.abs(latitude) > 75
+          Math.abs(latitude) >
+          75
         ) {
           value *= 0.20;
         }
@@ -1462,17 +1392,15 @@ function createVariableTexture(topic, earthTexture) {
         g = color[1];
         b = color[2];
 
-        /*
-          Only ocean gets opacity.
-        */
-
-        alpha = config.alpha;
+        alpha =
+          config.alpha;
       }
 
       const index =
         (y * width + x) * 4;
 
       image.data[index] = r;
+
       image.data[
         index + 1
       ] = g;
@@ -1507,11 +1435,441 @@ function createVariableTexture(topic, earthTexture) {
 }
 
 /* ============================================================
+   INSTRUMENT MARKERS
+   ONLY FUNCTIONAL CHANGE:
+   Multiple visible markers for selected instrument.
+   ============================================================ */
+
+const INSTRUMENT_MARKERS = {
+  Argo: {
+    color: "#ffd000",
+    type: "sphere",
+
+    positions: [
+      [-1.72, 0.62, 1.82],
+      [-1.25, 1.02, 1.98],
+      [-0.72, 1.38, 2.06],
+      [-0.15, 1.62, 2.04],
+      [0.45, 1.55, 2.03],
+      [0.98, 1.25, 1.96],
+      [1.43, 0.78, 1.84],
+      [1.66, 0.20, 1.80],
+      [1.42, -0.42, 1.90],
+      [0.92, -0.88, 2.00],
+      [0.30, -1.15, 2.06],
+      [-0.38, -1.22, 2.03],
+      [-1.02, -0.98, 1.92],
+      [-1.50, -0.55, 1.82],
+      [-1.78, 0.02, 1.76],
+    ],
+  },
+
+  Float: {
+    color: "#168dff",
+    type: "float",
+
+    positions: [
+      [-1.72, 0.52, 1.84],
+      [-1.30, 0.96, 2.00],
+      [-0.78, 1.35, 2.08],
+      [-0.18, 1.58, 2.04],
+      [0.42, 1.52, 2.05],
+      [0.98, 1.18, 1.98],
+      [1.46, 0.68, 1.86],
+      [1.68, 0.10, 1.78],
+      [1.40, -0.48, 1.90],
+      [0.88, -0.94, 2.02],
+      [0.28, -1.18, 2.08],
+      [-0.38, -1.22, 2.04],
+      [-1.02, -1.00, 1.94],
+      [-1.52, -0.52, 1.84],
+      [-1.78, 0.02, 1.76],
+    ],
+  },
+
+  CTD: {
+    color: "#d9e8ff",
+    type: "ctd",
+
+    positions: [
+      [-1.62, 0.58, 1.86],
+      [-1.20, 1.00, 2.00],
+      [-0.68, 1.34, 2.08],
+      [-0.10, 1.55, 2.06],
+      [0.48, 1.48, 2.05],
+      [1.00, 1.14, 1.98],
+      [1.45, 0.66, 1.86],
+      [1.66, 0.08, 1.80],
+      [1.42, -0.45, 1.90],
+      [0.90, -0.92, 2.00],
+      [0.32, -1.16, 2.07],
+      [-0.34, -1.20, 2.03],
+      [-0.96, -0.96, 1.94],
+      [-1.48, -0.52, 1.84],
+      [0.02, 0.42, 2.38],
+    ],
+  },
+
+  BGC: {
+    color: "#45ff72",
+    type: "bgc",
+
+    positions: [
+      [-1.70, 0.60, 1.82],
+      [-1.24, 1.04, 1.98],
+      [-0.68, 1.40, 2.08],
+      [-0.08, 1.62, 2.03],
+      [0.52, 1.50, 2.04],
+      [1.04, 1.12, 1.96],
+      [1.50, 0.62, 1.82],
+      [1.68, 0.05, 1.76],
+      [1.40, -0.50, 1.90],
+      [0.88, -0.96, 2.02],
+      [0.28, -1.20, 2.07],
+      [-0.40, -1.24, 2.02],
+      [-1.04, -1.00, 1.92],
+      [-1.54, -0.52, 1.80],
+      [-0.58, 0.28, 2.42],
+    ],
+  },
+
+  Moorings: {
+    color: "#ffb300",
+    type: "mooring",
+
+    positions: [
+      [-1.68, 0.56, 1.82],
+      [-1.22, 1.00, 2.00],
+      [-0.68, 1.38, 2.08],
+      [-0.08, 1.58, 2.05],
+      [0.52, 1.48, 2.04],
+      [1.04, 1.12, 1.96],
+      [1.48, 0.62, 1.84],
+      [1.68, 0.05, 1.78],
+      [1.42, -0.48, 1.90],
+      [0.92, -0.94, 2.02],
+      [0.30, -1.18, 2.08],
+      [-0.38, -1.22, 2.04],
+      [-1.00, -0.98, 1.94],
+      [-1.52, -0.52, 1.82],
+      [0.58, 0.30, 2.36],
+    ],
+  },
+
+  "HF Radar": {
+    color: "#ff3030",
+    type: "radar",
+
+    positions: [
+      [-1.70, 0.56, 1.80],
+      [-1.24, 1.00, 1.98],
+      [-0.70, 1.38, 2.08],
+      [-0.10, 1.60, 2.02],
+      [0.50, 1.50, 2.04],
+      [1.04, 1.12, 1.94],
+      [1.50, 0.62, 1.80],
+      [1.70, 0.05, 1.74],
+      [1.42, -0.50, 1.88],
+      [0.90, -0.96, 2.00],
+      [0.28, -1.20, 2.06],
+      [-0.40, -1.24, 2.02],
+      [-1.02, -1.00, 1.90],
+      [-1.54, -0.54, 1.80],
+      [-0.02, 0.40, 2.40],
+    ],
+  },
+};
+
+/*
+  Marker displayed for the currently selected
+  right-panel instrument.
+*/
+
+function InstrumentMarker({
+  instrument,
+}) {
+  if (
+    !instrument ||
+    !INSTRUMENT_MARKERS[
+      instrument
+    ]
+  ) {
+    return null;
+  }
+
+  const marker =
+    INSTRUMENT_MARKERS[
+      instrument
+    ];
+
+  return (
+    <group>
+      {marker.positions.map(
+        (position, index) => (
+          <group
+            key={`${instrument}-${index}`}
+            position={position}
+          >
+            {/* Outer glow */}
+            <mesh>
+              <sphereGeometry
+                args={[
+                  0.14,
+                  20,
+                  20,
+                ]}
+              />
+
+              <meshBasicMaterial
+                color={
+                  marker.color
+                }
+                transparent
+                opacity={0.22}
+                blending={
+                  THREE.AdditiveBlending
+                }
+                depthWrite={false}
+              />
+            </mesh>
+
+            {/* Main marker */}
+            <mesh>
+              <sphereGeometry
+                args={[
+                  0.060,
+                  18,
+                  18,
+                ]}
+              />
+
+              <meshStandardMaterial
+                color={
+                  marker.color
+                }
+                emissive={
+                  marker.color
+                }
+                emissiveIntensity={2}
+                roughness={0.2}
+                metalness={0.05}
+              />
+            </mesh>
+
+            {/* Bright center */}
+            <mesh
+              position={[
+                0,
+                0,
+                0.045,
+              ]}
+            >
+              <sphereGeometry
+                args={[
+                  0.018,
+                  10,
+                  10,
+                ]}
+              />
+
+              <meshBasicMaterial
+                color="#ffffff"
+              />
+            </mesh>
+
+            {/* FLOAT marker shape */}
+            {marker.type ===
+              "float" && (
+              <mesh
+                rotation={[
+                  0,
+                  0,
+                  Math.PI / 2,
+                ]}
+                position={[
+                  0,
+                  -0.12,
+                  0,
+                ]}
+              >
+                <capsuleGeometry
+                  args={[
+                    0.022,
+                    0.14,
+                    6,
+                    10,
+                  ]}
+                />
+
+                <meshStandardMaterial
+                  color={
+                    marker.color
+                  }
+                  emissive={
+                    marker.color
+                  }
+                  emissiveIntensity={1.2}
+                />
+              </mesh>
+            )}
+
+            {/* BGC marker */}
+            {marker.type ===
+              "bgc" && (
+              <mesh
+                rotation={[
+                  0,
+                  0,
+                  Math.PI / 4,
+                ]}
+              >
+                <torusGeometry
+                  args={[
+                    0.085,
+                    0.012,
+                    8,
+                    20,
+                  ]}
+                />
+
+                <meshBasicMaterial
+                  color={
+                    marker.color
+                  }
+                />
+              </mesh>
+            )}
+
+            {/* Mooring marker */}
+            {marker.type ===
+              "mooring" && (
+              <group
+                position={[
+                  0,
+                  -0.12,
+                  0,
+                ]}
+              >
+                <mesh>
+                  <cylinderGeometry
+                    args={[
+                      0.018,
+                      0.018,
+                      0.20,
+                      10,
+                    ]}
+                  />
+
+                  <meshStandardMaterial
+                    color={
+                      marker.color
+                    }
+                    emissive={
+                      marker.color
+                    }
+                    emissiveIntensity={1}
+                  />
+                </mesh>
+
+                <mesh
+                  position={[
+                    0,
+                    -0.11,
+                    0,
+                  ]}
+                >
+                  <sphereGeometry
+                    args={[
+                      0.040,
+                      12,
+                      12,
+                    ]}
+                  />
+
+                  <meshStandardMaterial
+                    color={
+                      marker.color
+                    }
+                    emissive={
+                      marker.color
+                    }
+                    emissiveIntensity={1}
+                  />
+                </mesh>
+              </group>
+            )}
+
+            {/* HF Radar marker */}
+            {marker.type ===
+              "radar" && (
+              <mesh
+                rotation={[
+                  Math.PI / 2,
+                  0,
+                  0,
+                ]}
+              >
+                <torusGeometry
+                  args={[
+                    0.085,
+                    0.012,
+                    8,
+                    20,
+                  ]}
+                />
+
+                <meshBasicMaterial
+                  color={
+                    marker.color
+                  }
+                />
+              </mesh>
+            )}
+
+            {/* CTD vertical sensor */}
+            {marker.type ===
+              "ctd" && (
+              <mesh
+                position={[
+                  0,
+                  -0.12,
+                  0,
+                ]}
+              >
+                <cylinderGeometry
+                  args={[
+                    0.018,
+                    0.018,
+                    0.20,
+                    10,
+                  ]}
+                />
+
+                <meshStandardMaterial
+                  color={
+                    marker.color
+                  }
+                  emissive={
+                    marker.color
+                  }
+                  emissiveIntensity={1.2}
+                />
+              </mesh>
+            )}
+          </group>
+        )
+      )}
+    </group>
+  );
+}
+
+/* ============================================================
    OCEAN GLOBE
    ============================================================ */
 
 function OceanGlobe({
   activeTopic,
+  selectedInstrument,
   onGlobeClick,
 }) {
   const earthTexture =
@@ -1520,13 +1878,16 @@ function OceanGlobe({
       "/textures/earth_atmos_2048.jpg"
     );
 
-const variableTexture =
-  useMemo(() => {
-    return createVariableTexture(
+  const variableTexture =
+    useMemo(() => {
+      return createVariableTexture(
+        activeTopic,
+        earthTexture
+      );
+    }, [
       activeTopic,
-      earthTexture
-    );
-  }, [activeTopic, earthTexture]);
+      earthTexture,
+    ]);
 
   return (
     <group
@@ -1617,53 +1978,41 @@ const variableTexture =
         />
       </mesh>
 
-      {/* Argo marker */}
-      <group
-        position={[
-          0.75,
-          2.35,
-          0.95,
-        ]}
-      >
-        <mesh>
-          <cylinderGeometry
-            args={[
-              0.055,
-              0.055,
-              0.55,
-              16,
-            ]}
-          />
-
-          <meshStandardMaterial
-            color="#ffd000"
-            emissive="#ffae00"
-            emissiveIntensity={0.65}
-          />
-        </mesh>
-
-        <mesh
-          position={[
-            0,
-            0.32,
-            0,
+      {/* Atmosphere - existing second layer preserved */}
+      <mesh scale={1.045}>
+        <sphereGeometry
+          args={[
+            2.55,
+            96,
+            64,
           ]}
-        >
-          <sphereGeometry
-            args={[
-              0.08,
-              20,
-              20,
-            ]}
-          />
+        />
 
-          <meshBasicMaterial
-            color="#ffd000"
-          />
-        </mesh>
-      </group>
+        <meshBasicMaterial
+          color="#1ba9ff"
+          transparent
+          opacity={0.14}
+          side={THREE.BackSide}
+          blending={
+            THREE.AdditiveBlending
+          }
+        />
+      </mesh>
 
-      {/* Glider */}
+      {/* ======================================================
+          SELECTED INSTRUMENT MARKERS
+          ====================================================== */}
+
+      <InstrumentMarker
+        instrument={
+          selectedInstrument
+        }
+      />
+
+      {/* ======================================================
+          EXISTING GLIDER
+          ====================================================== */}
+
       <group
         position={[
           -1.25,
@@ -1714,7 +2063,10 @@ const variableTexture =
         </mesh>
       </group>
 
-      {/* CTD */}
+      {/* ======================================================
+          EXISTING CTD
+          ====================================================== */}
+
       <mesh
         position={[
           1.62,
@@ -1744,6 +2096,7 @@ const variableTexture =
 
 function EducationScene({
   activeTopic,
+  selectedInstrument,
   onGlobeClick,
 }) {
   return (
@@ -1800,6 +2153,9 @@ function EducationScene({
         activeTopic={
           activeTopic
         }
+        selectedInstrument={
+          selectedInstrument
+        }
         onGlobeClick={
           onGlobeClick
         }
@@ -1828,20 +2184,28 @@ function EducationChatbot({
     EDUCATION_DATA[topic] ||
     EDUCATION_DATA.Temperature;
 
-  const [selectedQuestion, setSelectedQuestion] =
-    useState(null);
+  const [
+    selectedQuestion,
+    setSelectedQuestion,
+  ] = useState(null);
 
-  const [userQuestion, setUserQuestion] =
-    useState("");
+  const [
+    userQuestion,
+    setUserQuestion,
+  ] = useState("");
 
-  const [messages, setMessages] =
-    useState([]);
+  const [
+    messages,
+    setMessages,
+  ] = useState([]);
 
   const askQuestion = (
     question
   ) => {
     const cleanQuestion =
-      String(question || "").trim();
+      String(
+        question || ""
+      ).trim();
 
     if (!cleanQuestion) {
       return;
@@ -1970,8 +2334,6 @@ function EducationChatbot({
           </strong>
           .
           <br />
-          {/* Choose a predefined question
-          or type your own question. */}
         </div>
 
         {/* PREDEFINED QUESTIONS */}
@@ -1990,6 +2352,7 @@ function EducationChatbot({
                 }
                 onClick={(event) => {
                   event.stopPropagation();
+
                   askQuestion(
                     question
                   );
@@ -2005,36 +2368,36 @@ function EducationChatbot({
 
         {messages.length >
           0 && (
-            <div className="chatbot-messages">
-              {messages.map(
-                (
-                  message,
-                  index
-                ) => (
-                  <div
-                    key={`${message.type}-${index}`}
-                    className={
-                      message.type ===
-                        "user"
-                        ? "chat-message user"
-                        : "chat-message assistant"
-                    }
-                  >
-                    <div className="chat-message-label">
-                      {message.type ===
-                        "user"
-                        ? "You"
-                        : "Ocean Assistant"}
-                    </div>
-
-                    <div className="chat-message-text">
-                      {message.text}
-                    </div>
+          <div className="chatbot-messages">
+            {messages.map(
+              (
+                message,
+                index
+              ) => (
+                <div
+                  key={`${message.type}-${index}`}
+                  className={
+                    message.type ===
+                      "user"
+                      ? "chat-message user"
+                      : "chat-message assistant"
+                  }
+                >
+                  <div className="chat-message-label">
+                    {message.type ===
+                      "user"
+                      ? "You"
+                      : "Ocean Assistant"}
                   </div>
-                )
-              )}
-            </div>
-          )}
+
+                  <div className="chat-message-text">
+                    {message.text}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        )}
 
         {/* TEXT INPUT */}
 
@@ -2073,13 +2436,8 @@ function EducationChatbot({
         {/* FOOTER */}
 
         <div className="chatbot-footer">
-          <span>
-            {/* Predefined educational knowledge */}
-          </span>
-
-          <span>
-            {/* ● Offline */}
-          </span>
+          <span />
+          <span />
         </div>
       </div>
     </div>
@@ -2091,11 +2449,22 @@ function EducationChatbot({
    ============================================================ */
 
 export default function Education() {
-  const [activeTopic, setActiveTopic] =
-    useState("Temperature");
+  const [
+    activeTopic,
+    setActiveTopic,
+  ] = useState(
+    "Temperature"
+  );
 
-  const [chatbotOpen, setChatbotOpen] =
-    useState(false);
+  const [
+    selectedInstrument,
+    setSelectedInstrument,
+  ] = useState(null);
+
+  const [
+    chatbotOpen,
+    setChatbotOpen,
+  ] = useState(false);
 
   const openChatbot = () => {
     setChatbotOpen(true);
@@ -2133,10 +2502,6 @@ export default function Education() {
             type="button"
             className="education-info"
             onClick={(event) => {
-              /*
-                Header info does not open
-                the chatbot. Globe only.
-              */
               event.stopPropagation();
             }}
             aria-label="Information"
@@ -2173,7 +2538,6 @@ export default function Education() {
 
         <aside className="education-left-panel">
           {[
-            "Sea ice",
             "Salinity",
             "Temperature",
             "Currents",
@@ -2195,13 +2559,6 @@ export default function Education() {
                 }
                 onClick={(event) => {
                   event.stopPropagation();
-
-                  /*
-                    IMPORTANT:
-                    Layer click only changes
-                    the selected variable.
-                    It does NOT open chatbot.
-                  */
 
                   setActiveTopic(
                     item
@@ -2227,10 +2584,6 @@ export default function Education() {
                   onClick={(event) => {
                     event.stopPropagation();
 
-                    /*
-                      Info icon also only
-                      selects the layer.
-                    */
                     setActiveTopic(
                       item
                     );
@@ -2259,6 +2612,9 @@ export default function Education() {
               <EducationScene
                 activeTopic={
                   activeTopic
+                }
+                selectedInstrument={
+                  selectedInstrument
                 }
                 onGlobeClick={
                   openChatbot
@@ -2331,7 +2687,6 @@ export default function Education() {
 
         {/* ==================================================
             RIGHT PANEL
-            FIXED REFERENCE CONTENT
         ================================================== */}
 
         <aside className="education-right-panel">
@@ -2344,10 +2699,6 @@ export default function Education() {
               <button
                 type="button"
                 onClick={(event) => {
-                  /*
-                    Keep reference UI.
-                    It does not open chatbot.
-                  */
                   event.stopPropagation();
                 }}
                 aria-label="Temperature information"
@@ -2482,11 +2833,10 @@ export default function Education() {
                   onClick={(event) => {
                     event.stopPropagation();
 
-                    /*
-                      Instrument selection
-                      changes the active topic.
-                      Chatbot does not open.
-                    */
+                    setSelectedInstrument(
+                      item
+                    );
+
                     setActiveTopic(
                       item
                     );
@@ -2506,6 +2856,10 @@ export default function Education() {
                     className="instrument-info"
                     onClick={(event) => {
                       event.stopPropagation();
+
+                      setSelectedInstrument(
+                        item
+                      );
 
                       setActiveTopic(
                         item
@@ -2656,12 +3010,6 @@ export default function Education() {
         <button
           type="button"
           onClick={(event) => {
-            /*
-              Globe is the main
-              chatbot trigger.
-              This button remains
-              informational only.
-            */
             event.stopPropagation();
           }}
           aria-label="Information"

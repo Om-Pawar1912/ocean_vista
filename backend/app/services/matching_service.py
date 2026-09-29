@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-
 import math
 
 import numpy as np
@@ -29,72 +28,375 @@ DEFAULT_MAX_DEPTH_DIFFERENCE_METERS = 100.0
 
 
 # =========================================================
+# OCEANVISTA VARIABLE ALIASES
+# =========================================================
+#
+# These aliases are intentionally broader than the parser
+# aliases because different NetCDF model products use
+# different CF / Copernicus / ocean-model variable names.
+#
+
+OCEAN_VARIABLE_ALIASES = {
+
+    "temperature": [
+        "temperature",
+        "temp",
+        "thetao",
+        "theta",
+        "water_temperature",
+        "sea_water_temperature",
+        "TEMP",
+        "TEMPERATURE",
+    ],
+
+    "salinity": [
+        "salinity",
+        "salt",
+        "so",
+        "psal",
+        "PSAL",
+        "sea_water_salinity",
+        "sea_water_practical_salinity",
+        "SALINITY",
+        "SALT",
+    ],
+
+    "chlorophyll": [
+        "chlorophyll",
+        "chlorophyll_a",
+        "chlor_a",
+        "chl",
+        "chla",
+        "CHL",
+        "CHLA",
+        "chloro",
+        "sea_water_chlorophyll",
+        "mass_concentration_of_chlorophyll_a_in_sea_water",
+    ],
+
+    "oxygen": [
+        "oxygen",
+        "dissolved_oxygen",
+        "dissolvedoxygen",
+        "doxy",
+        "DOXY",
+        "o2",
+        "O2",
+        "oxygen_concentration",
+        "sea_water_oxygen",
+        "moles_of_oxygen",
+        "mole_concentration_of_dissolved_molecular_oxygen_in_sea_water",
+    ],
+
+    "density": [
+        "density",
+        "rho",
+        "RHO",
+        "sea_water_density",
+    ],
+
+    "current_u": [
+        "current_u",
+        "u",
+        "uo",
+        "eastward_sea_water_velocity",
+        "eastward_velocity",
+        "water_u",
+    ],
+
+    "current_v": [
+        "current_v",
+        "v",
+        "vo",
+        "northward_sea_water_velocity",
+        "northward_velocity",
+        "water_v",
+    ],
+
+    "depth": [
+        "depth",
+        "deptht",
+        "depthu",
+        "depthv",
+        "depthw",
+        "DEPTH",
+    ],
+}
+
+
+# =========================================================
 # BASIC HELPERS
 # =========================================================
 
 def safe_float(value) -> Optional[float]:
-    """
-    Safely convert a value to float.
-    """
 
     try:
+
         if value is None:
             return None
 
         if pd.isna(value):
             return None
 
-        number = float(value)
+        value = float(value)
 
-        if not math.isfinite(number):
+        if not math.isfinite(value):
             return None
 
-        return number
+        return value
 
     except Exception:
+
         return None
 
 
 def safe_string(value) -> Optional[str]:
-    """
-    Safely convert a value to string.
-    """
 
     if value is None:
         return None
 
     try:
+
         if pd.isna(value):
             return None
+
     except Exception:
         pass
 
     return str(value)
 
 
-def normalize_variable_name(variable: str) -> str:
+# =========================================================
+# VARIABLE NORMALIZATION
+# =========================================================
+
+def normalize_text(value: str) -> str:
     """
-    Convert variable name to the standard OceanVista name.
+    Normalize a variable name for flexible comparison.
     """
 
-    variable = str(variable).strip()
+    return (
+        str(value)
+        .strip()
+        .lower()
+        .replace("-", "_")
+        .replace(" ", "_")
+        .replace("/", "_")
+    )
 
-    if variable in VARIABLE_ALIASES:
-        return variable
 
-    variable_lower = variable.lower()
+def normalize_variable_name(
+    variable: str
+) -> str:
 
+    variable = str(
+        variable
+    ).strip()
+
+    normalized = normalize_text(
+        variable
+    )
+
+    # First check our own aliases
+    for standard_name, aliases in OCEAN_VARIABLE_ALIASES.items():
+
+        candidates = [
+            standard_name,
+            *aliases,
+        ]
+
+        for candidate in candidates:
+
+            if normalized == normalize_text(
+                candidate
+            ):
+
+                return standard_name
+
+    # Then check parser aliases
     for standard_name, aliases in VARIABLE_ALIASES.items():
 
-        if variable_lower == standard_name.lower():
+        if normalized == normalize_text(
+            standard_name
+        ):
+
             return standard_name
 
         for alias in aliases:
 
-            if variable_lower == str(alias).lower():
+            if normalized == normalize_text(
+                alias
+            ):
+
                 return standard_name
 
     return variable
+
+
+# =========================================================
+# VARIABLE RESOLUTION
+# =========================================================
+
+def resolve_model_variable(
+    dataset: xr.Dataset,
+    variable: str,
+) -> Optional[str]:
+    """
+    Resolve a requested OceanVista variable to the
+    actual variable name inside a NetCDF model.
+
+    Example:
+
+        salinity -> so
+
+        temperature -> thetao
+
+        chlorophyll -> chl
+
+        oxygen -> o2 / DOXY / dissolved_oxygen
+    """
+
+    standard_variable = normalize_variable_name(
+        variable
+    )
+
+    aliases = OCEAN_VARIABLE_ALIASES.get(
+        standard_variable,
+        [standard_variable],
+    )
+
+    # -----------------------------------------------------
+    # 1. Exact variable-name matching
+    # -----------------------------------------------------
+
+    dataset_variables = list(
+        dataset.data_vars.keys()
+    )
+
+    for candidate in aliases:
+
+        candidate_normalized = normalize_text(
+            candidate
+        )
+
+        for actual_name in dataset_variables:
+
+            if normalize_text(
+                actual_name
+            ) == candidate_normalized:
+
+                return actual_name
+
+    # -----------------------------------------------------
+    # 2. parser aliases
+    # -----------------------------------------------------
+
+    parser_aliases = VARIABLE_ALIASES.get(
+        standard_variable,
+        [],
+    )
+
+    for candidate in parser_aliases:
+
+        candidate_normalized = normalize_text(
+            candidate
+        )
+
+        for actual_name in dataset_variables:
+
+            if normalize_text(
+                actual_name
+            ) == candidate_normalized:
+
+                return actual_name
+
+    # -----------------------------------------------------
+    # 3. CF metadata matching
+    # -----------------------------------------------------
+
+    metadata_keys = [
+        "standard_name",
+        "long_name",
+        "description",
+        "comment",
+        "units",
+    ]
+
+    keywords = {
+        "temperature": [
+            "temperature",
+            "sea_water_temperature",
+        ],
+
+        "salinity": [
+            "salinity",
+            "sea_water_salinity",
+            "practical_salinity",
+        ],
+
+        "chlorophyll": [
+            "chlorophyll",
+            "chlorophyll_a",
+        ],
+
+        "oxygen": [
+            "oxygen",
+            "dissolved_oxygen",
+            "molecular_oxygen",
+        ],
+
+        "density": [
+            "density",
+            "sea_water_density",
+        ],
+
+        "current_u": [
+            "eastward",
+            "u_velocity",
+            "eastward_velocity",
+        ],
+
+        "current_v": [
+            "northward",
+            "v_velocity",
+            "northward_velocity",
+        ],
+    }
+
+    search_terms = keywords.get(
+        standard_variable,
+        [],
+    )
+
+    for actual_name in dataset_variables:
+
+        data_array = dataset[
+            actual_name
+        ]
+
+        metadata_text = " ".join(
+            str(
+                data_array.attrs.get(
+                    key,
+                    "",
+                )
+            )
+            for key in metadata_keys
+        ).lower()
+
+        variable_text = (
+            str(actual_name)
+            + " "
+            + metadata_text
+        ).lower()
+
+        for term in search_terms:
+
+            if term.lower() in variable_text:
+
+                return actual_name
+
+    return None
 
 
 # =========================================================
@@ -102,9 +404,6 @@ def normalize_variable_name(variable: str) -> str:
 # =========================================================
 
 def parse_time(value) -> Optional[pd.Timestamp]:
-    """
-    Convert different time representations into pandas Timestamp.
-    """
 
     if value is None:
         return None
@@ -119,12 +418,14 @@ def parse_time(value) -> Optional[pd.Timestamp]:
 
     try:
 
-        timestamp = pd.Timestamp(value)
+        result = pd.Timestamp(
+            value
+        )
 
-        if pd.isna(timestamp):
+        if pd.isna(result):
             return None
 
-        return timestamp
+        return result
 
     except Exception:
 
@@ -135,25 +436,25 @@ def time_difference_hours(
     first_time,
     second_time,
 ) -> Optional[float]:
-    """
-    Return absolute time difference in hours.
-    """
 
-    first = parse_time(first_time)
-    second = parse_time(second_time)
+    first = parse_time(
+        first_time
+    )
+
+    second = parse_time(
+        second_time
+    )
 
     if first is None or second is None:
         return None
 
     try:
 
-        difference = abs(
+        return abs(
             (
                 first - second
             ).total_seconds()
-        )
-
-        return difference / 3600.0
+        ) / 3600.0
 
     except Exception:
 
@@ -161,15 +462,12 @@ def time_difference_hours(
 
 
 # =========================================================
-# DATASET TYPE HELPERS
+# DATASET TYPE
 # =========================================================
 
-def is_model_dataset(dataset: Dict[str, Any]) -> bool:
-    """
-    Determine whether a registered dataset is a model dataset.
-
-    Detection is intentionally conservative.
-    """
+def is_model_dataset(
+    dataset: Dict[str, Any]
+) -> bool:
 
     filename = str(
         dataset.get(
@@ -183,6 +481,12 @@ def is_model_dataset(dataset: Dict[str, Any]) -> bool:
         {},
     )
 
+    if not isinstance(
+        attributes,
+        dict,
+    ):
+        attributes = {}
+
     attribute_text = " ".join(
         f"{key} {value}"
         for key, value in attributes.items()
@@ -195,6 +499,7 @@ def is_model_dataset(dataset: Dict[str, Any]) -> bool:
     )
 
     model_keywords = [
+
         "model",
         "copernicus",
         "cmems",
@@ -207,6 +512,9 @@ def is_model_dataset(dataset: Dict[str, Any]) -> bool:
         "ocean model",
         "globalmy",
         "global_multi",
+        "phy",
+        "biogeochemical",
+        "bgc",
     ]
 
     return any(
@@ -215,31 +523,8 @@ def is_model_dataset(dataset: Dict[str, Any]) -> bool:
     )
 
 
-def is_observation_instrument(
-    instrument: Dict[str, Any],
-) -> bool:
-    """
-    Determine whether an instrument is an observation platform.
-    """
-
-    instrument_type = str(
-        instrument.get(
-            "type",
-            "",
-        )
-    ).upper()
-
-    return instrument_type in {
-        "ARGO",
-        "GLIDER",
-        "CTD",
-        "BGC",
-        "MOORING",
-    }
-
-
 # =========================================================
-# INSTRUMENT SEARCH
+# FIND INSTRUMENT
 # =========================================================
 
 def find_instrument(
@@ -249,33 +534,25 @@ def find_instrument(
     Optional[Dict[str, Any]],
     Optional[Dict[str, Any]],
 ]:
-    """
-    Search all registered datasets for an instrument.
-
-    Returns:
-
-        instrument
-        dataset
-    """
 
     requested_id = str(
         instrument_id
     )
 
     requested_type = (
-        str(instrument_type).upper()
+        str(
+            instrument_type
+        ).upper()
         if instrument_type
         else None
     )
 
     for dataset in get_datasets():
 
-        instruments = dataset.get(
+        for instrument in dataset.get(
             "instruments",
             [],
-        )
-
-        for instrument in instruments:
+        ):
 
             current_id = str(
                 instrument.get(
@@ -299,7 +576,10 @@ def find_instrument(
                 if current_type != requested_type:
                     continue
 
-            return instrument, dataset
+            return (
+                instrument,
+                dataset,
+            )
 
     return None, None
 
@@ -315,16 +595,16 @@ def get_observation_profile(
     List[float],
     List[float],
 ]:
-    """
-    Extract depth/value pairs from an observation instrument.
-    """
 
     profile = instrument.get(
         "profile",
         {},
     )
 
-    if not isinstance(profile, dict):
+    if not isinstance(
+        profile,
+        dict,
+    ):
         return [], []
 
     depths = profile.get(
@@ -337,36 +617,44 @@ def get_observation_profile(
         {},
     )
 
-    if not isinstance(variables, dict):
+    if not isinstance(
+        variables,
+        dict,
+    ):
         return [], []
 
     standard_variable = normalize_variable_name(
         variable
     )
 
-    values = variables.get(
-        standard_variable
-    )
+    values = None
+
+    # -----------------------------------------------------
+    # Direct standard name
+    # -----------------------------------------------------
+
+    for key, candidate_values in variables.items():
+
+        if normalize_variable_name(
+            key
+        ) == standard_variable:
+
+            values = candidate_values
+            break
 
     if values is None:
+        return [], []
 
-        # Try aliases directly.
-        aliases = VARIABLE_ALIASES.get(
-            standard_variable,
-            [standard_variable],
-        )
+    if not isinstance(
+        depths,
+        (list, tuple, np.ndarray)
+    ):
+        return [], []
 
-        for alias in aliases:
-
-            if alias in variables:
-
-                values = variables[
-                    alias
-                ]
-
-                break
-
-    if values is None:
+    if not isinstance(
+        values,
+        (list, tuple, np.ndarray)
+    ):
         return [], []
 
     result_depths = []
@@ -377,7 +665,9 @@ def get_observation_profile(
         len(values),
     )
 
-    for index in range(count):
+    for index in range(
+        count
+    ):
 
         depth = safe_float(
             depths[index]
@@ -408,136 +698,123 @@ def get_observation_profile(
 
 
 # =========================================================
-# MODEL COORDINATE DETECTION
+# COORDINATE HELPERS
 # =========================================================
 
 def find_coordinate_name(
     dataset: xr.Dataset,
     candidates: List[str],
 ) -> Optional[str]:
-    """
-    Find latitude/longitude/depth/time coordinate.
-    """
 
-    return find_variable(
+    result = find_variable(
         dataset.variables,
         candidates,
     )
 
+    if result:
+        return result
 
-def find_dimension_for_coordinate(
-    data_array: xr.DataArray,
-    coordinate_name: Optional[str],
-) -> Optional[str]:
-    """
-    Find the dimension associated with a coordinate.
-    """
+    # Additional flexible search
+    for name in dataset.variables:
 
-    if not coordinate_name:
-        return None
+        normalized_name = normalize_text(
+            name
+        )
 
-    if coordinate_name not in data_array:
-        return None
+        for candidate in candidates:
 
-    dims = list(
-        data_array[
-            coordinate_name
-        ].dims
-    )
+            if normalized_name == normalize_text(
+                candidate
+            ):
 
-    if not dims:
-        return None
+                return name
 
-    return dims[0]
+    return None
 
 
-# =========================================================
-# MODEL DATA VARIABLE
-# =========================================================
-
-def resolve_model_variable(
+def get_coordinate_values(
     dataset: xr.Dataset,
-    variable: str,
-) -> Optional[str]:
+    coordinate_name: str,
+):
     """
-    Resolve requested standard variable to actual
-    model NetCDF variable.
-    """
-
-    standard_variable = normalize_variable_name(
-        variable
-    )
-
-    aliases = VARIABLE_ALIASES.get(
-        standard_variable,
-        [standard_variable],
-    )
-
-    return find_variable(
-        dataset.data_vars,
-        aliases,
-    )
-
-
-# =========================================================
-# NEAREST INDEX
-# =========================================================
-
-def nearest_index(
-    values,
-    target,
-) -> Optional[int]:
-    """
-    Return index of nearest numeric coordinate.
+    Return coordinate values safely.
     """
 
     try:
 
-        array = np.asarray(
-            values,
-            dtype=float,
-        )
-
-        target_value = float(
-            target
+        return np.asarray(
+            dataset[
+                coordinate_name
+            ].values
         )
 
     except Exception:
 
-        return None
+        return np.asarray([])
 
-    if array.size == 0:
-        return None
 
-    valid_mask = np.isfinite(
-        array
+# =========================================================
+# LONGITUDE HANDLING
+# =========================================================
+
+def normalize_longitude_for_model(
+    longitude: float,
+    model_longitudes,
+) -> float:
+    """
+    Convert observation longitude to the convention
+    used by the model.
+
+    Supports:
+
+        -180 ... 180
+
+        0 ... 360
+    """
+
+    longitude = float(
+        longitude
     )
 
-    if not np.any(valid_mask):
-        return None
+    values = np.asarray(
+        model_longitudes,
+        dtype=float,
+    )
 
-    valid_indices = np.where(
-        valid_mask
-    )[0]
-
-    valid_values = array[
-        valid_mask
+    values = values[
+        np.isfinite(values)
     ]
 
-    index_in_valid = int(
-        np.argmin(
-            np.abs(
-                valid_values
-                - target_value
-            )
-        )
+    if values.size == 0:
+        return longitude
+
+    model_min = float(
+        np.min(values)
     )
 
-    return int(
-        valid_indices[
-            index_in_valid
-        ]
+    model_max = float(
+        np.max(values)
     )
+
+    # Model uses 0..360
+    if model_min >= 0 and model_max > 180:
+
+        while longitude < 0:
+            longitude += 360
+
+        while longitude >= 360:
+            longitude -= 360
+
+        return longitude
+
+    # Model uses -180..180
+    while longitude > 180:
+        longitude -= 360
+
+    while longitude < -180:
+        longitude += 360
+
+    return longitude
 
 
 # =========================================================
@@ -551,16 +828,6 @@ def extract_model_profile(
     observation_time,
     variable: str,
 ) -> Dict[str, Any]:
-    """
-    Extract a model vertical profile nearest to the
-    observation's location and time.
-
-    The function supports common model structures such as:
-
-        time, depth, lat, lon
-        depth, lat, lon
-        time, depth, latitude, longitude
-    """
 
     dataset = xr.open_dataset(
         file_path,
@@ -609,7 +876,7 @@ def extract_model_profile(
             )
 
         # =================================================
-        # MODEL VARIABLE
+        # VARIABLE
         # =================================================
 
         actual_variable = resolve_model_variable(
@@ -619,8 +886,13 @@ def extract_model_profile(
 
         if actual_variable is None:
 
+            available = list(
+                dataset.data_vars.keys()
+            )
+
             raise ValueError(
-                f"Model variable '{variable}' was not found."
+                f"Model variable '{variable}' was not found. "
+                f"Available model variables: {available}"
             )
 
         data = dataset[
@@ -641,7 +913,8 @@ def extract_model_profile(
 
             data = data.sel(
                 {
-                    lat_dim: latitude
+                    lat_dim:
+                        float(latitude)
                 },
                 method="nearest",
             )
@@ -654,13 +927,25 @@ def extract_model_profile(
             lon_name
         ]
 
+        model_longitudes = (
+            lon_coord.values
+        )
+
+        selected_longitude = (
+            normalize_longitude_for_model(
+                longitude,
+                model_longitudes,
+            )
+        )
+
         if lon_coord.ndim == 1:
 
             lon_dim = lon_coord.dims[0]
 
             data = data.sel(
                 {
-                    lon_dim: longitude
+                    lon_dim:
+                        selected_longitude
                 },
                 method="nearest",
             )
@@ -671,19 +956,14 @@ def extract_model_profile(
 
         selected_model_time = None
 
+        observation_timestamp = parse_time(
+            observation_time
+        )
+
         if (
             time_name
-            and time_name in dataset.variables
             and time_name in data.dims
         ):
-
-            model_time_coord = dataset[
-                time_name
-            ]
-
-            observation_timestamp = parse_time(
-                observation_time
-            )
 
             if observation_timestamp is not None:
 
@@ -692,19 +972,21 @@ def extract_model_profile(
                     data = data.sel(
                         {
                             time_name:
-                            observation_timestamp
+                                observation_timestamp
                         },
                         method="nearest",
                     )
 
-                    selected_model_time = (
-                        data.coords[
-                            time_name
-                        ].item()
-                        if time_name
+                    if (
+                        time_name
                         in data.coords
-                        else None
-                    )
+                    ):
+
+                        selected_model_time = (
+                            data.coords[
+                                time_name
+                            ].item()
+                        )
 
                 except Exception:
 
@@ -714,29 +996,25 @@ def extract_model_profile(
         # DEPTH
         # =================================================
 
-        if depth_name not in data.dims:
+        depth_coord = dataset[
+            depth_name
+        ]
 
-            # Depth may exist as a coordinate with
-            # a different dimension name.
-            depth_coord = dataset[
-                depth_name
-            ]
+        depth_dims = list(
+            depth_coord.dims
+        )
 
-            depth_dims = list(
-                depth_coord.dims
-            )
+        if depth_name in data.dims:
 
-            if depth_dims:
+            depth_dim = depth_name
 
-                depth_dim = depth_dims[0]
+        elif depth_dims:
 
-            else:
-
-                depth_dim = None
+            depth_dim = depth_dims[0]
 
         else:
 
-            depth_dim = depth_name
+            depth_dim = None
 
         if depth_dim is None:
 
@@ -745,42 +1023,43 @@ def extract_model_profile(
             )
 
         # =================================================
-        # KEEP ONLY DEPTH
+        # REDUCE ALL NON-DEPTH DIMENSIONS
         # =================================================
 
-        remaining_dims = list(
+        for dimension in list(
             data.dims
-        )
+        ):
 
-        for dimension in remaining_dims:
+            if dimension == depth_dim:
+                continue
 
-            if dimension != depth_dim:
+            try:
 
-                try:
+                if data.sizes[
+                    dimension
+                ] > 1:
 
-                    if data.sizes.get(
-                        dimension,
-                        0,
-                    ) == 1:
+                    # Select first remaining dimension.
+                    data = data.isel(
+                        {
+                            dimension: 0
+                        }
+                    )
 
-                        data = data.isel(
-                            {
-                                dimension:
-                                0
-                            }
-                        )
+                else:
 
-                except Exception:
+                    data = data.isel(
+                        {
+                            dimension: 0
+                        }
+                    )
 
-                    pass
+            except Exception:
+                pass
 
         # =================================================
-        # CONVERT VALUES
+        # VALUES
         # =================================================
-
-        depth_coord = dataset[
-            depth_name
-        ]
 
         depths = np.asarray(
             depth_coord.values
@@ -790,28 +1069,14 @@ def extract_model_profile(
             data.values
         ).squeeze()
 
-        # -------------------------------------------------
-        # Handle remaining dimensions safely.
-        # -------------------------------------------------
-
-        while values.ndim > 1:
-
-            values = values[0]
-
-        if values.ndim == 0:
-
-            values = np.array(
-                [
-                    values.item()
-                ]
-            )
-
         depths = np.asarray(
-            depths
+            depths,
+            dtype=float,
         ).flatten()
 
         values = np.asarray(
-            values
+            values,
+            dtype=float,
         ).flatten()
 
         count = min(
@@ -822,7 +1087,9 @@ def extract_model_profile(
         result_depths = []
         result_values = []
 
-        for index in range(count):
+        for index in range(
+            count
+        ):
 
             depth = safe_float(
                 depths[index]
@@ -847,51 +1114,49 @@ def extract_model_profile(
             )
 
         # =================================================
-        # MODEL LOCATION
+        # ACTUAL MODEL LOCATION
         # =================================================
 
         model_latitude = None
         model_longitude = None
 
-        try:
+        if lat_coord.ndim == 1:
 
-            model_latitude = safe_float(
-                dataset[
-                    lat_name
-                ].sel(
+            try:
+
+                selected_lat = lat_coord.sel(
                     {
-                        dataset[
-                            lat_name
-                        ].dims[0]:
-                        latitude
+                        lat_coord.dims[0]:
+                            float(latitude)
                     },
                     method="nearest",
-                ).values
-            )
+                )
 
-        except Exception:
+                model_latitude = safe_float(
+                    selected_lat.values
+                )
 
-            pass
+            except Exception:
+                pass
 
-        try:
+        if lon_coord.ndim == 1:
 
-            model_longitude = safe_float(
-                dataset[
-                    lon_name
-                ].sel(
+            try:
+
+                selected_lon = lon_coord.sel(
                     {
-                        dataset[
-                            lon_name
-                        ].dims[0]:
-                        longitude
+                        lon_coord.dims[0]:
+                            selected_longitude
                     },
                     method="nearest",
-                ).values
-            )
+                )
 
-        except Exception:
+                model_longitude = safe_float(
+                    selected_lon.values
+                )
 
-            pass
+            except Exception:
+                pass
 
         # =================================================
         # TIME DIFFERENCE
@@ -907,7 +1172,9 @@ def extract_model_profile(
         return {
 
             "variable":
-                variable,
+                normalize_variable_name(
+                    variable
+                ),
 
             "actual_variable":
                 actual_variable,
@@ -953,11 +1220,10 @@ def match_depth_profiles(
     observation_values: List[float],
     model_depths: List[float],
     model_values: List[float],
-    max_depth_difference: float = DEFAULT_MAX_DEPTH_DIFFERENCE_METERS,
+    max_depth_difference:
+        float =
+        DEFAULT_MAX_DEPTH_DIFFERENCE_METERS,
 ) -> List[Dict[str, float]]:
-    """
-    Match observation and model values by nearest depth.
-    """
 
     if not observation_depths:
         return []
@@ -998,76 +1264,90 @@ def match_depth_profiles(
         ):
             continue
 
-        valid_mask = np.isfinite(
-            model_depth_array
-        ) & np.isfinite(
-            model_value_array
+        valid_mask = (
+            np.isfinite(
+                model_depth_array
+            )
+            &
+            np.isfinite(
+                model_value_array
+            )
         )
 
-        if not np.any(valid_mask):
+        if not np.any(
+            valid_mask
+        ):
             continue
 
-        valid_depths = model_depth_array[
-            valid_mask
-        ]
+        valid_depths = (
+            model_depth_array[
+                valid_mask
+            ]
+        )
 
-        valid_values = model_value_array[
-            valid_mask
-        ]
+        valid_values = (
+            model_value_array[
+                valid_mask
+            ]
+        )
 
-        nearest = int(
+        nearest_index = int(
             np.argmin(
                 np.abs(
                     valid_depths
-                    - observation_depth
+                    -
+                    observation_depth
                 )
             )
         )
 
         model_depth = float(
-            valid_depths[nearest]
+            valid_depths[
+                nearest_index
+            ]
         )
 
         model_value = float(
-            valid_values[nearest]
+            valid_values[
+                nearest_index
+            ]
         )
 
         depth_difference = abs(
             model_depth
-            - observation_depth
+            -
+            observation_depth
         )
 
         if (
             depth_difference
-            > max_depth_difference
+            >
+            max_depth_difference
         ):
             continue
 
-        matches.append(
-            {
+        matches.append({
 
-                "depth":
-                    float(
-                        observation_depth
-                    ),
+            "depth":
+                float(
+                    observation_depth
+                ),
 
-                "observation":
-                    float(
-                        observation_value
-                    ),
+            "observation":
+                float(
+                    observation_value
+                ),
 
-                "model":
-                    float(
-                        model_value
-                    ),
+            "model":
+                float(
+                    model_value
+                ),
 
-                "depth_difference":
-                    float(
-                        depth_difference
-                    ),
-
-            }
-        )
+            "depth_difference":
+                float(
+                    depth_difference
+                ),
+        })
 
     return matches
 
@@ -1079,32 +1359,22 @@ def match_depth_profiles(
 def calculate_metrics(
     matches: List[Dict[str, float]],
 ) -> Dict[str, Any]:
-    """
-    Calculate real Model-vs-Observation metrics.
-    """
 
     if not matches:
 
         return {
 
             "count": 0,
-
             "rmse": None,
-
             "bias": None,
-
             "mae": None,
-
             "correlation": None,
 
             "model_min": None,
-
             "model_max": None,
 
             "observation_min": None,
-
             "observation_max": None,
-
         }
 
     model_values = np.asarray(
@@ -1124,84 +1394,75 @@ def calculate_metrics(
     )
 
     valid = (
-        np.isfinite(model_values)
+        np.isfinite(
+            model_values
+        )
         &
         np.isfinite(
             observation_values
         )
     )
 
-    model_values = model_values[
-        valid
-    ]
-
-    observation_values = (
-        observation_values[
-            valid
-        ]
+    model_values = (
+        model_values[valid]
     )
 
-    if len(model_values) == 0:
+    observation_values = (
+        observation_values[valid]
+    )
+
+    if len(
+        model_values
+    ) == 0:
 
         return {
 
             "count": 0,
-
             "rmse": None,
-
             "bias": None,
-
             "mae": None,
-
             "correlation": None,
 
             "model_min": None,
-
             "model_max": None,
 
             "observation_min": None,
-
             "observation_max": None,
-
         }
 
-    differences = (
+    difference = (
         model_values
         -
         observation_values
     )
 
-    squared_errors = (
-        differences ** 2
-    )
-
-    absolute_errors = np.abs(
-        differences
-    )
-
     rmse = float(
         np.sqrt(
             np.mean(
-                squared_errors
+                difference ** 2
+            )
+        )
+    )
+
+    mae = float(
+        np.mean(
+            np.abs(
+                difference
             )
         )
     )
 
     bias = float(
         np.mean(
-            differences
-        )
-    )
-
-    mae = float(
-        np.mean(
-            absolute_errors
+            difference
         )
     )
 
     correlation = None
 
-    if len(model_values) >= 2:
+    if len(
+        model_values
+    ) >= 2:
 
         model_std = float(
             np.std(
@@ -1217,7 +1478,8 @@ def calculate_metrics(
 
         if (
             model_std > 0
-            and observation_std > 0
+            and
+            observation_std > 0
         ):
 
             correlation = float(
@@ -1226,6 +1488,11 @@ def calculate_metrics(
                     observation_values,
                 )[0, 1]
             )
+
+            if not math.isfinite(
+                correlation
+            ):
+                correlation = None
 
     return {
 
@@ -1239,11 +1506,11 @@ def calculate_metrics(
         "rmse":
             rmse,
 
-        "bias":
-            bias,
-
         "mae":
             mae,
+
+        "bias":
+            bias,
 
         "correlation":
             correlation,
@@ -1275,27 +1542,29 @@ def calculate_metrics(
                     observation_values
                 )
             ),
-
     }
 
 
 # =========================================================
-# FIND MODEL DATASET
+# FIND MODEL DATASETS
 # =========================================================
 
-def find_model_dataset(
+def find_model_datasets(
     preferred_dataset_id: Optional[str] = None,
-) -> Tuple[
-    Optional[Dict[str, Any]],
-    Optional[str],
+) -> List[
+    Tuple[
+        Dict[str, Any],
+        str,
+    ]
 ]:
-    """
-    Find a registered model dataset.
-
-    If dataset_id is supplied, it is checked first.
-    """
 
     datasets = get_datasets()
+
+    result = []
+
+    # -----------------------------------------------------
+    # Preferred dataset first
+    # -----------------------------------------------------
 
     if preferred_dataset_id:
 
@@ -1303,20 +1572,32 @@ def find_model_dataset(
 
             if str(
                 dataset.get("id")
-            ) == str(
+            ) != str(
                 preferred_dataset_id
             ):
+                continue
 
-                file_path = dataset.get(
-                    "path"
-                )
+            file_path = dataset.get(
+                "path"
+            )
 
-                if file_path:
+            if (
+                file_path
+                and Path(
+                    file_path
+                ).exists()
+            ):
 
-                    return (
+                result.append(
+                    (
                         dataset,
                         file_path,
                     )
+                )
+
+    # -----------------------------------------------------
+    # Other model datasets
+    # -----------------------------------------------------
 
     for dataset in datasets:
 
@@ -1332,16 +1613,53 @@ def find_model_dataset(
         if not file_path:
             continue
 
-        if Path(
+        if not Path(
             file_path
         ).exists():
+            continue
 
-            return (
+        dataset_id = str(
+            dataset.get("id")
+        )
+
+        if any(
+            str(
+                item[0].get("id")
+            ) == dataset_id
+            for item in result
+        ):
+            continue
+
+        result.append(
+            (
                 dataset,
                 file_path,
             )
+        )
 
-    return None, None
+    return result
+
+
+# =========================================================
+# BACKWARD COMPATIBILITY
+# =========================================================
+
+def find_model_dataset(
+    preferred_dataset_id:
+        Optional[str] = None,
+) -> Tuple[
+    Optional[Dict[str, Any]],
+    Optional[str],
+]:
+
+    datasets = find_model_datasets(
+        preferred_dataset_id
+    )
+
+    if not datasets:
+        return None, None
+
+    return datasets[0]
 
 
 # =========================================================
@@ -1353,22 +1671,19 @@ def match_model_observations(
     variable: str,
     instrument_type: Optional[str] = None,
     model_dataset_id: Optional[str] = None,
-    max_time_difference_hours: float = DEFAULT_MAX_TIME_DIFFERENCE_HOURS,
-    max_depth_difference_meters: float = DEFAULT_MAX_DEPTH_DIFFERENCE_METERS,
+    max_time_difference_hours:
+        float =
+        DEFAULT_MAX_TIME_DIFFERENCE_HOURS,
+    max_depth_difference_meters:
+        float =
+        DEFAULT_MAX_DEPTH_DIFFERENCE_METERS,
 ) -> Dict[str, Any]:
-    """
-    Main Model-vs-Observation matching function.
 
-    Steps:
-
-        1. Find selected ARGO/GLIDER instrument.
-        2. Read its observation profile.
-        3. Find model dataset.
-        4. Select model data nearest to observation
-           latitude/longitude/time.
-        5. Match model and observation by depth.
-        6. Calculate RMSE, Bias, MAE and Correlation.
-    """
+    standard_variable = (
+        normalize_variable_name(
+            variable
+        )
+    )
 
     # =====================================================
     # FIND OBSERVATION
@@ -1395,7 +1710,7 @@ def match_model_observations(
     ).upper()
 
     # =====================================================
-    # OBSERVATION LOCATION
+    # LOCATION
     # =====================================================
 
     latitude = safe_float(
@@ -1433,7 +1748,7 @@ def match_model_observations(
     observation_depths, observation_values = (
         get_observation_profile(
             instrument,
-            variable,
+            standard_variable,
         )
     )
 
@@ -1441,47 +1756,111 @@ def match_model_observations(
 
         raise ValueError(
             f"No observation depth profile found "
-            f"for variable '{variable}'."
+            f"for variable '{standard_variable}'."
         )
 
     # =====================================================
-    # MODEL DATASET
+    # FIND MODEL DATASET
     # =====================================================
 
-    model_dataset, model_file_path = (
-        find_model_dataset(
-            preferred_dataset_id=
-                model_dataset_id
-        )
+    candidate_models = find_model_datasets(
+        preferred_dataset_id=model_dataset_id
     )
 
-    if model_dataset is None:
+    if not candidate_models:
 
         raise ValueError(
             "No model dataset was found."
         )
 
-    model_path = Path(
-        model_file_path
-    )
+    # =====================================================
+    # TRY MODEL DATASETS
+    #
+    # Important:
+    # We don't stop at the first model dataset.
+    # We try the dataset that actually contains
+    # the requested variable.
+    # =====================================================
 
-    if not model_path.exists():
+    model_profile = None
+    model_dataset = None
+    model_file_path = None
+    errors = []
+
+    for candidate_dataset, candidate_path in (
+        candidate_models
+    ):
+
+        try:
+
+            profile = extract_model_profile(
+                file_path=Path(
+                    candidate_path
+                ),
+
+                latitude=latitude,
+
+                longitude=longitude,
+
+                observation_time=
+                    observation_time,
+
+                variable=
+                    standard_variable,
+            )
+
+            if not profile.get(
+                "depth"
+            ):
+
+                errors.append(
+                    f"{candidate_dataset.get('filename')}: "
+                    "no model depth values"
+                )
+
+                continue
+
+            if not profile.get(
+                "values"
+            ):
+
+                errors.append(
+                    f"{candidate_dataset.get('filename')}: "
+                    "no model values"
+                )
+
+                continue
+
+            model_profile = profile
+            model_dataset = candidate_dataset
+            model_file_path = candidate_path
+
+            break
+
+        except Exception as exc:
+
+            errors.append(
+                f"{candidate_dataset.get('filename')}: "
+                f"{exc}"
+            )
+
+    if model_profile is None:
+
+        available_models = [
+            dataset.get(
+                "filename"
+            )
+            for dataset, _
+            in candidate_models
+        ]
 
         raise ValueError(
-            "Model dataset file does not exist."
+            f"Model variable '{standard_variable}' "
+            f"could not be resolved in any model dataset. "
+            f"Available model files: "
+            f"{available_models}. "
+            f"Details: {errors}"
         )
-
-    # =====================================================
-    # MODEL PROFILE
-    # =====================================================
-
-    model_profile = extract_model_profile(
-        file_path=model_path,
-        latitude=latitude,
-        longitude=longitude,
-        observation_time=observation_time,
-        variable=variable,
-    )
 
     # =====================================================
     # TIME VALIDATION
@@ -1497,7 +1876,8 @@ def match_model_observations(
         model_time_difference is not None
         and
         model_time_difference
-        > max_time_difference_hours
+        >
+        max_time_difference_hours
     ):
 
         return {
@@ -1514,7 +1894,9 @@ def match_model_observations(
             "instrument": {
 
                 "id":
-                    instrument.get("id"),
+                    instrument.get(
+                        "id"
+                    ),
 
                 "type":
                     actual_instrument_type,
@@ -1527,11 +1909,10 @@ def match_model_observations(
 
                 "time":
                     observation_time,
-
             },
 
             "variable":
-                variable,
+                standard_variable,
 
             "time_difference_hours":
                 model_time_difference,
@@ -1543,7 +1924,6 @@ def match_model_observations(
 
             "metrics":
                 calculate_metrics([]),
-
         }
 
     # =====================================================
@@ -1583,7 +1963,29 @@ def match_model_observations(
     )
 
     # =====================================================
-    # RESULT
+    # GRAPH DATA
+    # =====================================================
+
+    graph = {
+
+        "depth": [
+            item["depth"]
+            for item in matches
+        ],
+
+        "observation": [
+            item["observation"]
+            for item in matches
+        ],
+
+        "model": [
+            item["model"]
+            for item in matches
+        ],
+    }
+
+    # =====================================================
+    # FINAL RESULT
     # =====================================================
 
     return {
@@ -1611,7 +2013,6 @@ def match_model_observations(
 
             "time":
                 observation_time,
-
         },
 
         "observation_dataset": {
@@ -1629,7 +2030,6 @@ def match_model_observations(
                 )
                 if observation_dataset
                 else None,
-
         },
 
         "model_dataset": {
@@ -1647,7 +2047,7 @@ def match_model_observations(
         },
 
         "variable":
-            variable,
+            standard_variable,
 
         "actual_model_variable":
             model_profile.get(
@@ -1661,7 +2061,6 @@ def match_model_observations(
 
             "longitude":
                 longitude,
-
         },
 
         "model_location": {
@@ -1675,7 +2074,6 @@ def match_model_observations(
                 model_profile.get(
                     "model_longitude"
                 ),
-
         },
 
         "observation_time":
@@ -1702,7 +2100,6 @@ def match_model_observations(
 
             "values":
                 observation_values,
-
         },
 
         "model_profile": {
@@ -1718,15 +2115,16 @@ def match_model_observations(
                     "values",
                     [],
                 ),
-
         },
 
         "matches":
             matches,
 
+        "graph":
+            graph,
+
         "metrics":
             metrics,
-
     }
 
 
@@ -1737,13 +2135,10 @@ def match_model_observations(
 def calculate_rmse_and_bias(
     model_values: List[float],
     observation_values: List[float],
-) -> Dict[str, Optional[float]]:
-    """
-    Simple utility for already-matched arrays.
-
-    Useful if the frontend/backend already has
-    matching depth values.
-    """
+) -> Dict[
+    str,
+    Optional[float],
+]:
 
     model = []
     observation = []
@@ -1753,7 +2148,9 @@ def calculate_rmse_and_bias(
         len(observation_values),
     )
 
-    for index in range(count):
+    for index in range(
+        count
+    ):
 
         model_value = safe_float(
             model_values[index]
@@ -1784,7 +2181,6 @@ def calculate_rmse_and_bias(
             "rmse": None,
 
             "bias": None,
-
         }
 
     model_array = np.asarray(
@@ -1820,5 +2216,4 @@ def calculate_rmse_and_bias(
                     difference
                 )
             ),
-
     }

@@ -391,42 +391,57 @@
    ========================================================= */
 
 .education-color-scale {
-  /* margin-top: 15px;
+  position: absolute;
+  top: 110px;
+  right: 25px;
+
+  width: 285px;
+
   border: 1px solid rgba(0, 153, 255, 0.55);
   border-radius: 10px;
+
   padding: 12px;
-  background: rgba(2, 15, 29, 0.82); */
-  display: none;
+
+  background: rgba(2, 15, 29, 0.88);
+
+  z-index: 14;
 }
 
 .color-scale-title {
   color: #00b4ff;
   font-size: 12px;
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .temperature-gradient {
   height: 18px;
+  width: 100%;
+
   border-radius: 3px;
+
   background:
-    linear-gradient(180deg,
-      #ff2020 0%,
-      #ff8a00 17%,
-      #ffe600 34%,
-      #00ef7b 53%,
-      #00d8ff 70%,
-      #005eff 84%,
-      #3300ff 100%);
+    linear-gradient(
+      90deg,
+      #3300ff 0%,
+      #005eff 16%,
+      #00d8ff 32%,
+      #00ef7b 50%,
+      #ffe600 68%,
+      #ff8a00 84%,
+      #ff2020 100%
+    );
 }
 
 .temperature-values {
   display: flex;
   justify-content: space-between;
+
   color: #b9cde0;
   font-size: 10px;
+
   margin-top: 5px;
 }
-
 /* =========================================================
    INSTRUMENT SELECTOR
    RIGHT SIDE
@@ -436,16 +451,16 @@
   position: absolute;
 
   right: 25px;
-  top: 135px;
+  top: 205px;
 
-  width: 300px;
+  width: 285px;
 
   margin-top: 0;
 
   border: 1px solid rgba(0, 153, 255, 0.55);
-  border-radius: 10px;
+  border-radius: 9px;
 
-  padding: 7px 10px;
+  padding: 7px 9px;
 
   background: rgba(2, 15, 29, 0.88);
 

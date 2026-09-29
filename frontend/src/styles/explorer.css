@@ -1292,7 +1292,7 @@
   position: fixed;
 
   top: 32px;
-  right: 360px;
+  right: 100px;
 
   height: 52px;
 
@@ -3021,4 +3021,365 @@
     grid-template-columns:
       1fr !important;
   }
+}
+
+
+/* =========================================================
+   CROSS SECTION / ARGO MINI MAP
+========================================================= */
+
+.scene-minimap {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+
+  width: 138px;
+  height: 112px;
+
+  z-index: 20;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(27, 181, 238, 0.55);
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(7, 49, 72, 0.96),
+      rgba(4, 24, 39, 0.98)
+    );
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    inset 0 0 20px rgba(0, 155, 220, 0.08);
+}
+
+.scene-minimap .mini-map-title {
+  position: absolute;
+  left: 9px;
+  top: 5px;
+
+  z-index: 50;
+
+  color: #d9f4ff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.25px;
+
+  pointer-events: none;
+
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.cross-section-map {
+  position: absolute;
+
+  left: 5px;
+  right: 5px;
+
+  top: 25px;
+  bottom: 5px;
+
+  overflow: hidden;
+
+  border-radius: 6px;
+
+  border:
+    1px solid
+    rgba(44, 174, 224, 0.28);
+
+  background: #061d2e;
+}
+
+.cross-section-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 6px;
+
+  background: #061d2e;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  outline: none;
+}
+
+.cross-section-map .leaflet-tile {
+  filter:
+    brightness(0.72)
+    saturate(0.85)
+    contrast(1.08);
+}
+
+.cross-section-map .leaflet-control-zoom {
+  display: none;
+}
+
+/* =========================================================
+   ARGO MAP MARKER
+========================================================= */
+
+.argo-mini-marker-wrapper {
+  background: transparent !important;
+  border: none !important;
+}
+
+.argo-mini-marker {
+  position: relative;
+
+  width: 20px;
+  height: 20px;
+}
+
+.argo-mini-marker-ring {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 18px;
+  height: 18px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(42, 220, 255, 0.85);
+
+  box-shadow:
+    0 0 7px
+      rgba(0, 207, 255, 0.75),
+    0 0 14px
+      rgba(0, 174, 255, 0.38);
+
+  animation:
+    argoMiniPulse
+    2s
+    ease-in-out
+    infinite;
+}
+
+.argo-mini-marker-core {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 7px;
+  height: 7px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: #22d7ff;
+
+  border:
+    1px solid #ffffff;
+
+  box-shadow:
+    0 0 8px
+      rgba(24, 209, 255, 1);
+}
+
+@keyframes argoMiniPulse {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.85);
+
+    opacity: 0.65;
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.12);
+
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.85);
+
+    opacity: 0.65;
+  }
+}
+
+/* =========================================================
+   MAP LOCATION
+========================================================= */
+
+.mini-map-location-badge {
+  position: absolute;
+
+  left: 6px;
+  bottom: 5px;
+
+  z-index: 60;
+
+  padding: 2px 5px;
+
+  border-radius: 4px;
+
+  background:
+    rgba(3, 20, 33, 0.82);
+
+  border:
+    1px solid
+    rgba(52, 189, 232, 0.24);
+
+  color: #bdeaff;
+
+  font-size: 7px;
+
+  line-height: 1;
+
+  pointer-events: none;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   NORTH ARROW
+========================================================= */
+
+.mini-map-north-arrow {
+  position: absolute;
+
+  right: 7px;
+  top: 29px;
+
+  z-index: 60;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 0;
+
+  color: #d9f5ff;
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.9);
+
+  pointer-events: none;
+}
+
+.mini-map-north-arrow span:last-child {
+  font-size: 9px;
+  line-height: 8px;
+}
+
+/* =========================================================
+   NO ARGO LOCATION
+========================================================= */
+
+.cross-section-map-empty {
+  position: absolute;
+
+  left: 5px;
+  right: 5px;
+
+  top: 25px;
+  bottom: 5px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0, 117, 167, 0.22),
+      rgba(3, 20, 32, 0.95)
+    );
+
+  border:
+    1px solid
+    rgba(45, 169, 216, 0.22);
+
+  color: #80b8d4;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   ARGO POPUP
+========================================================= */
+
+.argo-map-popup {
+  min-width: 95px;
+
+  color: #dff7ff;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+.argo-map-popup strong {
+  display: block;
+
+  color: #19c8ff;
+
+  margin-bottom: 2px;
+}
+
+/* =========================================================
+   DARK LEAFLET POPUP
+========================================================= */
+
+.cross-section-map
+.leaflet-popup-content-wrapper {
+  background: #071e31;
+
+  border:
+    1px solid
+    rgba(28, 170, 224, 0.55);
+
+  color: #dff7ff;
+
+  border-radius: 7px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.45);
+}
+
+.cross-section-map
+.leaflet-popup-tip {
+  background: #071e31;
+}
+
+.cross-section-map
+.leaflet-popup-close-button {
+  color: #9bdcff !important;
 }

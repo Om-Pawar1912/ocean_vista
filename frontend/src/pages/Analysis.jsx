@@ -33,7 +33,20 @@ import {
 
 import "../styles/analysis.css";
 
-const API_BASE = "http://127.0.0.1:8000";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
+
+import L from "leaflet";
+
+import "leaflet/dist/leaflet.css";
+
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  "http://127.0.0.1:8000";
 
 /* =========================================================
    CONSTANTS
@@ -445,22 +458,33 @@ function getVariableDefinition(
   );
 }
 
-function getInstrumentType(instrument, instrumentId) {
+function getInstrumentType(
+  instrument,
+  instrumentId
+) {
   const rawType =
-    getValueFromObject(instrument, [
-      "instrument_type",
-      "instrumentType",
-      "platform_type",
-      "platformType",
-      "type",
-      "source",
-      "instrument",
-    ]);
+    getValueFromObject(
+      instrument,
+      [
+        "instrument_type",
+        "instrumentType",
+        "platform_type",
+        "platformType",
+        "type",
+        "source",
+        "instrument",
+      ]
+    );
 
   if (rawType) {
-    const type = String(rawType).toLowerCase();
+    const type =
+      String(
+        rawType
+      ).toLowerCase();
 
-    if (type.includes("glider")) {
+    if (
+      type.includes("glider")
+    ) {
       return "glider";
     }
 
@@ -472,10 +496,10 @@ function getInstrumentType(instrument, instrumentId) {
     }
   }
 
-  // Fallback for IDs such as SG6738
-  const id = String(
-    instrumentId || ""
-  ).toLowerCase();
+  const id =
+    String(
+      instrumentId || ""
+    ).toLowerCase();
 
   if (
     id.startsWith("sg") ||
@@ -484,11 +508,8 @@ function getInstrumentType(instrument, instrumentId) {
     return "glider";
   }
 
-  // Your ARGO IDs such as 2903671
   return "argo";
 }
-
-
 
 /* =========================================================
    SCIENTIFIC COLOR SCALE
@@ -529,8 +550,8 @@ function scientificColor(
       1,
       (numericValue -
         numericMin) /
-      (numericMax -
-        numericMin)
+        (numericMax -
+          numericMin)
     )
   );
 
@@ -569,7 +590,7 @@ function scientificColor(
 
   let right =
     stops[
-    stops.length - 1
+      stops.length - 1
     ];
 
   for (
@@ -599,23 +620,23 @@ function scientificColor(
 
   const r = Math.round(
     left.c[0] +
-    (right.c[0] -
-      left.c[0]) *
-    localT
+      (right.c[0] -
+        left.c[0]) *
+        localT
   );
 
   const g = Math.round(
     left.c[1] +
-    (right.c[1] -
-      left.c[1]) *
-    localT
+      (right.c[1] -
+        left.c[1]) *
+        localT
   );
 
   const b = Math.round(
     left.c[2] +
-    (right.c[2] -
-      left.c[2]) *
-    localT
+      (right.c[2] -
+        left.c[2]) *
+        localT
   );
 
   return `rgb(${r}, ${g}, ${b})`;
@@ -637,17 +658,17 @@ function depthToY(
     Math.min(
       1,
       depth /
-      Math.max(
-        maxDepth,
-        1
-      )
+        Math.max(
+          maxDepth,
+          1
+        )
     )
   );
 
   return (
     topY -
     ratio *
-    (topY - bottomY)
+      (topY - bottomY)
   );
 }
 
@@ -674,7 +695,6 @@ function ArgoFloat({
         }
       }}
     >
-      {/* Main yellow body */}
       <mesh>
         <cylinderGeometry
           args={[
@@ -690,7 +710,6 @@ function ArgoFloat({
         />
       </mesh>
 
-      {/* Lower antenna */}
       <mesh
         position={[
           0,
@@ -712,7 +731,6 @@ function ArgoFloat({
         />
       </mesh>
 
-      {/* Top cap */}
       <mesh
         position={[
           0,
@@ -733,7 +751,6 @@ function ArgoFloat({
         />
       </mesh>
 
-      {/* Selected glow */}
       {selected && (
         <>
           <mesh>
@@ -862,22 +879,22 @@ function OceanParticles({
           x:
             -1.9 +
             Math.random() *
-            3.8,
+              3.8,
 
           y:
             -1.25 +
             Math.random() *
-            2.45,
+              2.45,
 
           z:
             -1.4 +
             Math.random() *
-            2.8,
+              2.8,
 
           speed:
             0.0015 +
             Math.random() *
-            0.003,
+              0.003,
 
           phase:
             Math.random() *
@@ -887,7 +904,7 @@ function OceanParticles({
           size:
             0.008 +
             Math.random() *
-            0.018,
+              0.018,
 
           index,
         })
@@ -913,7 +930,7 @@ function OceanParticles({
           let x =
             particle.x +
             state.clock.elapsedTime *
-            particle.speed;
+              particle.speed;
 
           if (x > 1.95) {
             x = -1.95;
@@ -926,10 +943,10 @@ function OceanParticles({
             particle.y +
             Math.sin(
               state.clock.elapsedTime *
-              0.5 +
-              particle.phase
+                0.5 +
+                particle.phase
             ) *
-            0.025;
+              0.025;
 
           positions[i + 2] =
             particle.z;
@@ -1164,15 +1181,15 @@ function OceanSurface({
           const sourceIndex =
             Math.floor(
               normalized *
-              Math.max(
-                values.length,
-                1
-              )
+                Math.max(
+                  values.length,
+                  1
+                )
             );
 
           const value =
             values[
-            sourceIndex
+              sourceIndex
             ] ??
             stats?.min ??
             0;
@@ -1211,13 +1228,13 @@ function OceanSurface({
             -2 +
             cellSize / 2 +
             cell.x *
-            cellSize;
+              cellSize;
 
           const z =
             -1.5 +
             cellDepth / 2 +
             cell.z *
-            cellDepth;
+              cellDepth;
 
           const color =
             scientificColor(
@@ -1263,7 +1280,6 @@ function OceanSurface({
         }
       )}
 
-      {/* Surface grid */}
       <gridHelper
         args={[
           4,
@@ -1432,10 +1448,10 @@ function OceanSlice({
   const selectedValue =
     selectedIndex >= 0
       ? safeNumber(
-        values[
-        selectedIndex
-        ]
-      )
+          values[
+            selectedIndex
+          ]
+        )
       : null;
 
   const sliceColor =
@@ -1460,7 +1476,7 @@ function OceanSlice({
       meshRef.current.position.z =
         Math.sin(
           state.clock.elapsedTime *
-          0.15
+            0.15
         ) *
         0.008;
     }
@@ -1510,7 +1526,6 @@ function OceanSlice({
         />
       </mesh>
 
-      {/* Slice outline */}
       <mesh
         position={[
           0,
@@ -1564,7 +1579,6 @@ function DepthAxis({
         0,
       ]}
     >
-      {/* Axis */}
       <mesh>
         <cylinderGeometry
           args={[
@@ -1645,8 +1659,7 @@ function CoordinateLabels({
   longitude,
 }) {
   const center =
-    safeNumber(longitude) ??
-    86;
+    safeNumber(longitude) ?? 86;
 
   const labels = [
     center - 2,
@@ -1740,7 +1753,6 @@ function ArgoTrack({
         />
       </line>
 
-      {/* Deep position */}
       <mesh
         position={[
           0,
@@ -1848,20 +1860,17 @@ function OceanBox({
         Math.max(
           1,
           verticalExaggeration /
-          100
+            100
         ),
         1,
       ]}
     >
-      {/* Transparent ocean volume */}
       <OceanGlass
         opacity={opacity}
       />
 
-      {/* Main cyan box border */}
       <OceanWireframe />
 
-      {/* Surface scientific field */}
       <OceanSurface
         values={
           variableValues
@@ -1873,7 +1882,6 @@ function OceanBox({
         opacity={opacity}
       />
 
-      {/* Depth colored layers */}
       {layerVisibility && (
         <VariableColorLayers
           depths={depths}
@@ -1889,7 +1897,6 @@ function OceanBox({
         />
       )}
 
-      {/* Selected slice */}
       <OceanSlice
         depth={
           selectedDepth
@@ -1906,10 +1913,8 @@ function OceanBox({
         opacity={opacity}
       />
 
-      {/* Current particles */}
       <OceanParticles />
 
-      {/* Ocean floor */}
       <OceanFloor
         visible={
           bathymetryVisibility
@@ -1920,17 +1925,14 @@ function OceanBox({
           ONLY SELECTED INSTRUMENT IS SHOWN
       ===================================================== */}
 
-      {/* ARGO */}
       {instrumentType === "argo" && (
         <>
-          {/* Argo trajectory */}
           <ArgoTrack
             maxDepth={
               actualMaxDepth
             }
           />
 
-          {/* Argo marker */}
           <group
             position={[
               0,
@@ -1945,13 +1947,10 @@ function OceanBox({
         </>
       )}
 
-      {/* GLIDER */}
       {instrumentType === "glider" && (
         <>
-          {/* Glider path */}
           <GliderTrajectory />
 
-          {/* Glider */}
           <group
             position={[
               -1.25,
@@ -1969,7 +1968,6 @@ function OceanBox({
         </>
       )}
 
-      {/* Central bottom point */}
       <mesh
         position={[
           0,
@@ -1990,14 +1988,12 @@ function OceanBox({
         />
       </mesh>
 
-      {/* Depth axis */}
       <DepthAxis
         maxDepth={
           actualMaxDepth
         }
       />
 
-      {/* Coordinate labels */}
       <CoordinateLabels
         longitude={
           longitude
@@ -2120,6 +2116,177 @@ function OceanScene({
         ]}
       />
     </>
+  );
+}
+
+/* =========================================================
+   ARGO CROSS SECTION MINI MAP
+========================================================= */
+
+function ArgoMiniMap({
+  latitude,
+  longitude,
+  instrumentId,
+}) {
+  const lat = safeNumber(latitude);
+  const lon = safeNumber(longitude);
+
+  /*
+   * If the API has no valid coordinates, show the same
+   * cross-section area without trying to create a map.
+   */
+  if (
+    lat === null ||
+    lon === null
+  ) {
+    return (
+      <div className="cross-section-map-empty">
+        <span>
+          No Argo location
+        </span>
+      </div>
+    );
+  }
+
+  /*
+   * Custom Argo marker.
+   * This avoids the normal Leaflet marker image-path
+   * problem in Vite/React applications.
+   */
+  const argoIcon = L.divIcon({
+    className:
+      "argo-mini-marker-wrapper",
+
+    html: `
+      <div class="argo-mini-marker">
+        <div class="argo-mini-marker-core"></div>
+        <div class="argo-mini-marker-ring"></div>
+      </div>
+    `,
+
+    iconSize: [
+      20,
+      20,
+    ],
+
+    iconAnchor: [
+      10,
+      10,
+    ],
+
+    popupAnchor: [
+      0,
+      -10,
+    ],
+  });
+
+  /*
+   * The map shows a small geographic area around
+   * the selected Argo position.
+   */
+  const latOffset = 1.8;
+  const lonOffset = 2.5;
+
+  const bounds = [
+    [
+      lat - latOffset,
+      lon - lonOffset,
+    ],
+    [
+      lat + latOffset,
+      lon + lonOffset,
+    ],
+  ];
+
+  return (
+    <div className="cross-section-map">
+
+      <MapContainer
+        center={[
+          lat,
+          lon,
+        ]}
+        bounds={bounds}
+        boundsOptions={{
+          padding: [
+            8,
+            8,
+          ],
+        }}
+        zoom={5}
+        minZoom={3}
+        maxZoom={9}
+        scrollWheelZoom={false}
+        doubleClickZoom={false}
+        dragging
+        zoomControl={false}
+        attributionControl={false}
+        keyboard={false}
+        style={{
+          width: "100%",
+          height: "100%",
+          background:
+            "#061d2e",
+        }}
+      >
+
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+          maxZoom={19}
+        />
+
+        <Marker
+          position={[
+            lat,
+            lon,
+          ]}
+          icon={argoIcon}
+        >
+          <Popup>
+            <div className="argo-map-popup">
+
+              <strong>
+                Argo Float
+              </strong>
+
+              <div>
+                {instrumentId ||
+                  "--"}
+              </div>
+
+              <div>
+                {lat.toFixed(
+                  4
+                )}
+                °N
+              </div>
+
+              <div>
+                {lon.toFixed(
+                  4
+                )}
+                °E
+              </div>
+
+            </div>
+          </Popup>
+        </Marker>
+
+      </MapContainer>
+
+      <div className="mini-map-location-badge">
+        {lat.toFixed(2)}
+        °N,{" "}
+        {lon.toFixed(2)}
+        °E
+      </div>
+
+      <div className="mini-map-north-arrow">
+        <span>N</span>
+        <span>▲</span>
+      </div>
+
+    </div>
   );
 }
 
@@ -2328,7 +2495,7 @@ export default function Analysis() {
 
           setError(
             err.message ||
-            "Unable to load instrument profile."
+              "Unable to load instrument profile."
           );
         }
       } finally {
@@ -2460,13 +2627,12 @@ export default function Analysis() {
   /* =====================================================
      CHART DATA
   ===================================================== */
+
   const comparisonMatches =
     comparisonResult?.result?.matches ?? [];
 
   const comparisonMetrics =
     comparisonResult?.result?.metrics ?? {};
-
-
 
   const chartData =
     useMemo(() => {
@@ -2476,10 +2642,13 @@ export default function Analysis() {
 
       return comparisonMatches.map(
         (item) => ({
-          depth: safeNumber(item.depth),
-          observation: safeNumber(
-            item.observation
+          depth: safeNumber(
+            item.depth
           ),
+          observation:
+            safeNumber(
+              item.observation
+            ),
           model: safeNumber(
             item.model
           ),
@@ -2507,8 +2676,8 @@ export default function Analysis() {
   const selectedValue =
     selectedDepthIndex >= 0
       ? variableValues[
-      selectedDepthIndex
-      ]
+          selectedDepthIndex
+        ]
       : null;
 
   /* =====================================================
@@ -2528,10 +2697,11 @@ export default function Analysis() {
     ) ||
     instrumentId;
 
-  const instrumentType = getInstrumentType(
-    instrument,
-    actualInstrumentId
-  );
+  const instrumentType =
+    getInstrumentType(
+      instrument,
+      actualInstrumentId
+    );
 
   const latitude =
     safeNumber(
@@ -2570,9 +2740,8 @@ export default function Analysis() {
       ]
     );
 
-
   /* =====================================================
-   MODEL VS OBSERVATION
+     MODEL VS OBSERVATION
   ===================================================== */
 
   useEffect(() => {
@@ -2612,16 +2781,24 @@ export default function Analysis() {
         setComparisonLoading(true);
         setComparisonError("");
 
-        const params = new URLSearchParams({
-          instrument_id: String(
-            actualInstrumentId
-          ),
-          instrument_type: String(
-            instrumentType
-          ),
-          variable: String(variable),
-          max_time_difference_hours: "24",
-        });
+        const params =
+          new URLSearchParams({
+            instrument_id:
+              String(
+                actualInstrumentId
+              ),
+
+            instrument_type:
+              String(
+                instrumentType
+              ),
+
+            variable:
+              String(variable),
+
+            max_time_difference_hours:
+              "24",
+          });
 
         console.log(
           "CALLING MODEL COMPARISON:",
@@ -2653,6 +2830,7 @@ export default function Analysis() {
             2
           )
         );
+
         console.log(
           "MODEL COMPARISON RESPONSE:",
           data
@@ -2661,12 +2839,14 @@ export default function Analysis() {
         if (!response.ok) {
           throw new Error(
             data?.detail ||
-            "Failed to load model comparison."
+              "Failed to load model comparison."
           );
         }
 
         if (!cancelled) {
-          setComparisonResult(data);
+          setComparisonResult(
+            data
+          );
         }
       } catch (err) {
         console.error(
@@ -2675,16 +2855,20 @@ export default function Analysis() {
         );
 
         if (!cancelled) {
-          setComparisonResult(null);
+          setComparisonResult(
+            null
+          );
 
           setComparisonError(
             err.message ||
-            "Unable to load model comparison."
+              "Unable to load model comparison."
           );
         }
       } finally {
         if (!cancelled) {
-          setComparisonLoading(false);
+          setComparisonLoading(
+            false
+          );
         }
       }
     }
@@ -2699,6 +2883,7 @@ export default function Analysis() {
     instrumentType,
     variable,
   ]);
+
   /* =====================================================
      RANGES
   ===================================================== */
@@ -2933,27 +3118,51 @@ export default function Analysis() {
     const timer =
       setInterval(() => {
         setSelectedDepth(
-          (current) => {
-            const next =
-              current + 50;
+          (currentDepth) => {
+            if (depths.length > 0) {
+              const currentIndex =
+                getNearestIndex(
+                  depths,
+                  currentDepth
+                );
+
+              if (
+                currentIndex < 0 ||
+                currentIndex >=
+                  depths.length - 1
+              ) {
+                return depths[0];
+              }
+
+              return depths[
+                currentIndex + 1
+              ];
+            }
+
+            const step = 50;
+
+            const nextDepth =
+              currentDepth +
+              step;
 
             if (
-              next >= maxDepth
+              nextDepth >=
+              maxDepth
             ) {
               return 0;
             }
 
-            return next;
+            return nextDepth;
           }
         );
-      }, 500);
+      }, 700);
 
-    return () =>
-      clearInterval(
-        timer
-      );
+    return () => {
+      clearInterval(timer);
+    };
   }, [
     playing,
+    depths,
     maxDepth,
   ]);
 
@@ -2979,11 +3188,14 @@ export default function Analysis() {
     return (
       <div className="analysis-page">
         <div className="analysis-error">
+
           <h2>
             Unable to load instrument
           </h2>
 
-          <p>{error}</p>
+          <p>
+            {error}
+          </p>
 
           <p>
             Instrument:{" "}
@@ -2992,6 +3204,7 @@ export default function Analysis() {
                 "--"}
             </strong>
           </p>
+
         </div>
       </div>
     );
@@ -3012,45 +3225,44 @@ export default function Analysis() {
 
         <div className="analysis-brand">
 
-          <div className="analysis-brand-logo">
-            INCOIS
+          <div>
+            OceanVista
           </div>
 
           <div>
-            <div className="analysis-brand-title">
-              OCEAN DATA VISUALIZATION SYSTEM
-            </div>
 
             <div className="analysis-brand-subtitle">
               Indian National Centre for Ocean
               Information Services
             </div>
+
           </div>
 
         </div>
 
         <div className="analysis-header-right">
 
-          <div className="live-status">
-            <span className="live-dot" />
-            Live Ocean Model
-          </div>
-
           <div className="dataset-search">
-            <span>⌕</span>
+
+            <span>
+              ⌕
+            </span>
 
             <input
               placeholder="Search dataset..."
               aria-label="Search dataset"
             />
+
           </div>
 
           <div className="analysis-date">
+
             {instrumentTime
               ? `${formatDate(
-                instrumentTime
-              )}, 00:00 UTC`
+                  instrumentTime
+                )}, 00:00 UTC`
               : "10 Aug 2026, 00:00 UTC"}
+
           </div>
 
           <div className="user-icon">
@@ -3079,7 +3291,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>▱</span>
+              <span>
+                ▱
+              </span>
 
               <span>
                 LAYER & VARIABLES
@@ -3100,14 +3314,16 @@ export default function Analysis() {
                       item.key
                     }
                     type="button"
-                    className={`variable-row ${variable ===
+                    className={`variable-row ${
+                      variable ===
                       item.key
-                      ? "active"
-                      : ""
-                      } ${!item.available
+                        ? "active"
+                        : ""
+                    } ${
+                      !item.available
                         ? "disabled"
                         : ""
-                      }`}
+                    }`}
                     onClick={() =>
                       handleVariable(
                         item.key
@@ -3120,19 +3336,22 @@ export default function Analysis() {
                     </span>
 
                     <span className="variable-label">
+
                       {item.label}
 
                       {item.unit
                         ? ` (${item.unit})`
                         : ""}
+
                     </span>
 
                     <span
-                      className={`variable-toggle ${variable ===
+                      className={`variable-toggle ${
+                        variable ===
                         item.key
-                        ? "on"
-                        : ""
-                        }`}
+                          ? "on"
+                          : ""
+                      }`}
                     >
                       <span />
                     </span>
@@ -3151,7 +3370,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>▱</span>
+              <span>
+                ▱
+              </span>
 
               <span>
                 DEPTH SLICE
@@ -3207,10 +3428,13 @@ export default function Analysis() {
             </div>
 
             <div className="depth-current">
+
               Depth:{" "}
+
               <strong>
                 {selectedDepth} m
               </strong>
+
             </div>
 
             <input
@@ -3248,7 +3472,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>◇</span>
+              <span>
+                ◇
+              </span>
 
               <span>
                 VISUALIZATION MODE
@@ -3276,8 +3502,12 @@ export default function Analysis() {
                   )
                 }
               >
-                <span>◇</span>
+                <span>
+                  ◇
+                </span>
+
                 3D Volume
+
               </button>
 
               <button
@@ -3294,8 +3524,12 @@ export default function Analysis() {
                   )
                 }
               >
-                <span>▱</span>
+                <span>
+                  ▱
+                </span>
+
                 Depth Slice
+
               </button>
 
               <button
@@ -3312,8 +3546,12 @@ export default function Analysis() {
                   )
                 }
               >
-                <span>≋</span>
+                <span>
+                  ≋
+                </span>
+
                 Isosurface
+
               </button>
 
             </div>
@@ -3326,7 +3564,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>◈</span>
+              <span>
+                ◈
+              </span>
 
               <span>
                 VISUAL CONTROLS
@@ -3416,10 +3656,11 @@ export default function Analysis() {
 
               <button
                 type="button"
-                className={`switch ${layerVisibility
-                  ? "on"
-                  : ""
-                  }`}
+                className={`switch ${
+                  layerVisibility
+                    ? "on"
+                    : ""
+                }`}
                 onClick={() =>
                   setLayerVisibility(
                     (
@@ -3442,10 +3683,11 @@ export default function Analysis() {
 
               <button
                 type="button"
-                className={`switch ${surfaceVisibility
-                  ? "on"
-                  : ""
-                  }`}
+                className={`switch ${
+                  surfaceVisibility
+                    ? "on"
+                    : ""
+                }`}
                 onClick={() =>
                   setSurfaceVisibility(
                     (
@@ -3468,10 +3710,11 @@ export default function Analysis() {
 
               <button
                 type="button"
-                className={`switch ${bathymetryVisibility
-                  ? "on"
-                  : ""
-                  }`}
+                className={`switch ${
+                  bathymetryVisibility
+                    ? "on"
+                    : ""
+                }`}
                 onClick={() =>
                   setBathymetryVisibility(
                     (
@@ -3558,42 +3801,59 @@ export default function Analysis() {
                 selectedDepth={
                   selectedDepth
                 }
+
                 opacity={
                   opacity
                 }
+
                 verticalExaggeration={
                   verticalExaggeration
                 }
+
                 layerVisibility={
                   layerVisibility
                 }
+
                 surfaceVisibility={
                   surfaceVisibility
                 }
+
                 bathymetryVisibility={
                   bathymetryVisibility
                 }
+
                 instrument={
                   instrument
                 }
+
+                instrumentType={
+                  instrumentType
+                }
+
                 longitude={
                   longitude
                 }
+
                 depths={
                   depths
                 }
+
                 variableValues={
                   variableValues
                 }
+
                 stats={
                   stats
                 }
+
                 maxDepth={
                   maxDepth
                 }
+
                 controlsRef={
                   controlsRef
                 }
+
                 cameraRef={
                   cameraRef
                 }
@@ -3605,7 +3865,7 @@ export default function Analysis() {
                 SCREEN OVERLAYS
             ================================================= */}
 
-            {/* Compass */}
+            {/* COMPASS */}
 
             <div className="compass">
 
@@ -3631,79 +3891,99 @@ export default function Analysis() {
 
             </div>
 
-            {/* Selected instrument */}
+            {/* ARGO LABEL */}
 
-            <div className="argo-label">
+            {instrumentType ===
+              "argo" && (
+              <div className="argo-label">
 
-              <span className="marker-dot green" />
+                <span className="marker-dot green" />
 
-              <span>
-                Argo Float
-                <br />
+                <span>
 
-                <strong>
-                  {
-                    actualInstrumentId
-                  }
-                </strong>
-              </span>
+                  Argo Float
 
-            </div>
+                  <br />
 
-            {/* Glider */}
+                  <strong>
+                    {
+                      actualInstrumentId
+                    }
+                  </strong>
 
-            <div className="glider-label">
+                </span>
 
-              <span className="marker-dot purple" />
+              </div>
+            )}
 
-              <span>
-                Glider
-                <br />
-                SG6738
-              </span>
+            {/* GLIDER LABEL */}
 
-            </div>
+            {instrumentType ===
+              "glider" && (
+              <div className="glider-label">
 
-            {/* Selected depth */}
+                <span className="marker-dot purple" />
+
+                <span>
+
+                  Glider
+
+                  <br />
+
+                  SG6738
+
+                </span>
+
+              </div>
+            )}
+
+            {/* SELECTED DEPTH */}
 
             <div className="scene-depth-label">
+
               Depth:{" "}
+
               <strong>
                 {selectedDepth} m
               </strong>
+
             </div>
 
-            {/* Location */}
+            {/* LOCATION */}
 
             <div className="scene-location">
 
               {latitude !==
                 null &&
-                longitude !==
+              longitude !==
                 null
                 ? `${latitude.toFixed(
-                  2
-                )}°N, ${longitude.toFixed(
-                  2
-                )}°E`
+                    2
+                  )}°N, ${longitude.toFixed(
+                    2
+                  )}°E`
                 : "Instrument location"}
 
             </div>
 
-            {/* Color scale */}
+            {/* COLOR SCALE */}
 
             <div className="scene-color-scale">
 
               <div>
+
                 {
                   variableDefinition.label
                 }{" "}
+
                 (
                 {
                   variableDefinition.unit
                 }
                 ) @{" "}
+
                 {selectedDepth} m
+
               </div>
 
               <div
@@ -3734,25 +4014,34 @@ export default function Analysis() {
 
             </div>
 
-            {/* Cross section */}
+            {/* =================================================
+                CROSS SECTION MINI MAP
+            ================================================= */}
 
-            <div className="scene-minimap">
+            {instrumentType ===
+              "argo" && (
+              <div className="scene-minimap">
 
-              <div className="mini-map-box">
-                <span />
+                <div className="mini-map-title">
+                  Cross Section
+                </div>
+
+                <ArgoMiniMap
+                  latitude={
+                    latitude
+                  }
+                  longitude={
+                    longitude
+                  }
+                  instrumentId={
+                    actualInstrumentId
+                  }
+                />
+
               </div>
+            )}
 
-              <div className="mini-map-n">
-                N
-              </div>
-
-              <div className="mini-map-title">
-                Cross Section
-              </div>
-
-            </div>
-
-            {/* Fullscreen */}
+            {/* FULLSCREEN */}
 
             <button
               type="button"
@@ -3775,6 +4064,16 @@ export default function Analysis() {
             <button
               type="button"
               className="timeline-play"
+              aria-label={
+                playing
+                  ? "Pause depth animation"
+                  : "Play depth animation"
+              }
+              title={
+                playing
+                  ? "Pause"
+                  : "Play"
+              }
               onClick={() =>
                 setPlaying(
                   (
@@ -3792,11 +4091,17 @@ export default function Analysis() {
             <button
               type="button"
               className="timeline-small"
-              onClick={() =>
+              aria-label="Go to first depth"
+              title="First depth"
+              onClick={() => {
+                setPlaying(false);
+
                 setSelectedDepth(
-                  0
-                )
-              }
+                  depths.length
+                    ? depths[0]
+                    : 0
+                );
+              }}
             >
               |◀
             </button>
@@ -3804,11 +4109,20 @@ export default function Analysis() {
             <button
               type="button"
               className="timeline-small"
-              onClick={() =>
+              aria-label="Go to last depth"
+              title="Last depth"
+              onClick={() => {
+                setPlaying(false);
+
                 setSelectedDepth(
-                  maxDepth
-                )
-              }
+                  depths.length
+                    ? depths[
+                        depths.length -
+                          1
+                      ]
+                    : maxDepth
+                );
+              }}
             >
               ▶|
             </button>
@@ -3819,8 +4133,8 @@ export default function Analysis() {
 
               {instrumentTime
                 ? `${formatDate(
-                  instrumentTime
-                )}, 00:00 UTC`
+                    instrumentTime
+                  )}, 00:00 UTC`
                 : "--"}
 
             </div>
@@ -3862,40 +4176,6 @@ export default function Analysis() {
 
             </div>
 
-            <button
-              type="button"
-              className={
-                visualMode ===
-                  "slice"
-                  ? "timeline-2d active"
-                  : "timeline-2d"
-              }
-              onClick={() =>
-                setVisualMode(
-                  "slice"
-                )
-              }
-            >
-              2D
-            </button>
-
-            <button
-              type="button"
-              className={
-                visualMode ===
-                  "3d"
-                  ? "timeline-3d active"
-                  : "timeline-3d"
-              }
-              onClick={() =>
-                setVisualMode(
-                  "3d"
-                )
-              }
-            >
-              3D
-            </button>
-
           </div>
 
         </main>
@@ -3912,7 +4192,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>▱</span>
+              <span>
+                ▱
+              </span>
 
               <span>
                 MODEL VS OBSERVATION
@@ -3967,15 +4249,20 @@ export default function Analysis() {
               {
                 variableDefinition.label
               }{" "}
+
               Profile (
+
               {observationType ===
                 "argo"
                 ? "Argo"
                 : "Glider"}{" "}
+
               -{" "}
+
               {
                 actualInstrumentId
               }
+
               )
 
             </div>
@@ -3987,6 +4274,7 @@ export default function Analysis() {
                   width="100%"
                   height="100%"
                 >
+
                   <LineChart
                     data={
                       chartData
@@ -4046,15 +4334,15 @@ export default function Analysis() {
                       formatter={(
                         value
                       ) => [
-                          value ===
-                            null
-                            ? "--"
-                            : formatNumber(
+                        value ===
+                          null
+                          ? "--"
+                          : formatNumber(
                               value,
                               3
                             ),
-                          "Observation",
-                        ]}
+                        "Observation",
+                      ]}
                       labelFormatter={(
                         value
                       ) =>
@@ -4075,6 +4363,7 @@ export default function Analysis() {
                     />
 
                   </LineChart>
+
                 </ResponsiveContainer>
               ) : (
                 <div className="no-profile-data">
@@ -4088,13 +4377,19 @@ export default function Analysis() {
             <div className="chart-legend">
 
               <span>
+
                 <i className="legend-model" />
+
                 Model
+
               </span>
 
               <span>
+
                 <i className="legend-observation" />
+
                 Observation
+
               </span>
 
             </div>
@@ -4111,7 +4406,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>◈</span>
+              <span>
+                ◈
+              </span>
 
               <span>
                 MODEL VS INSTRUMENT COMPARISON
@@ -4151,6 +4448,7 @@ export default function Analysis() {
                       )
                     }
                   >
+
                     {metric
                       .charAt(
                         0
@@ -4159,6 +4457,7 @@ export default function Analysis() {
                       metric.slice(
                         1
                       )}
+
                   </button>
                 )
               )}
@@ -4168,63 +4467,79 @@ export default function Analysis() {
             <div className="metric-values">
 
               <div className="metric-card">
+
                 <span>
                   Correlation
                 </span>
 
                 <strong>
+
                   {comparisonMetrics.correlation != null
                     ? formatNumber(
-                      comparisonMetrics.correlation,
-                      3
-                    )
+                        comparisonMetrics.correlation,
+                        3
+                      )
                     : "--"}
+
                 </strong>
+
               </div>
 
               <div className="metric-card">
+
                 <span>
                   RMSE
                 </span>
 
                 <strong>
+
                   {comparisonMetrics.rmse != null
                     ? formatNumber(
-                      comparisonMetrics.rmse,
-                      3
-                    )
+                        comparisonMetrics.rmse,
+                        3
+                      )
                     : "--"}
+
                 </strong>
+
               </div>
 
               <div className="metric-card">
+
                 <span>
                   MAE
                 </span>
 
                 <strong>
+
                   {comparisonMetrics.mae != null
                     ? formatNumber(
-                      comparisonMetrics.mae,
-                      3
-                    )
+                        comparisonMetrics.mae,
+                        3
+                      )
                     : "--"}
+
                 </strong>
+
               </div>
 
               <div className="metric-card">
+
                 <span>
                   Bias
                 </span>
 
                 <strong>
+
                   {comparisonMetrics.bias != null
                     ? formatNumber(
-                      comparisonMetrics.bias,
-                      3
-                    )
+                        comparisonMetrics.bias,
+                        3
+                      )
                     : "--"}
+
                 </strong>
+
               </div>
 
             </div>
@@ -4242,7 +4557,9 @@ export default function Analysis() {
 
             <div className="analysis-panel-title">
 
-              <span>◈</span>
+              <span>
+                ◈
+              </span>
 
               <span>
                 MIN / MAX RANGE
@@ -4257,7 +4574,9 @@ export default function Analysis() {
             <table className="range-table">
 
               <thead>
+
                 <tr>
+
                   <th>
                     Variable
                   </th>
@@ -4273,12 +4592,15 @@ export default function Analysis() {
                   <th>
                     Range
                   </th>
+
                 </tr>
+
               </thead>
 
               <tbody>
 
                 <tr>
+
                   <td>
                     Temperature
                   </td>
@@ -4303,9 +4625,11 @@ export default function Analysis() {
                       1
                     )}
                   </td>
+
                 </tr>
 
                 <tr>
+
                   <td>
                     Salinity
                   </td>
@@ -4330,9 +4654,11 @@ export default function Analysis() {
                       1
                     )}
                   </td>
+
                 </tr>
 
                 <tr>
+
                   <td>
                     Chlorophyll
                   </td>
@@ -4357,9 +4683,11 @@ export default function Analysis() {
                       2
                     )}
                   </td>
+
                 </tr>
 
                 <tr>
+
                   <td>
                     Dissolved Oxygen
                   </td>
@@ -4384,9 +4712,11 @@ export default function Analysis() {
                       1
                     )}
                   </td>
+
                 </tr>
 
                 <tr>
+
                   <td>
                     Nitrates
                   </td>
@@ -4411,6 +4741,7 @@ export default function Analysis() {
                       1
                     )}
                   </td>
+
                 </tr>
 
               </tbody>
@@ -4517,51 +4848,69 @@ export default function Analysis() {
       <div className="analysis-data-status">
 
         <span>
+
           Instrument:{" "}
+
           <strong>
             {
               actualInstrumentId
             }
           </strong>
+
         </span>
 
         <span>
+
           Lat:{" "}
+
           <strong>
+
             {latitude !==
-              null
+            null
               ? latitude.toFixed(
-                4
-              )
+                  4
+                )
               : "--"}
+
           </strong>
+
         </span>
 
         <span>
+
           Lon:{" "}
+
           <strong>
+
             {longitude !==
-              null
+            null
               ? longitude.toFixed(
-                4
-              )
+                  4
+                )
               : "--"}
+
           </strong>
+
         </span>
 
         <span>
+
           Depth:{" "}
+
           <strong>
             {selectedDepth} m
           </strong>
+
         </span>
 
         <span>
+
           {
             variableDefinition.label
-          }
-          :{" "}
+          }:{" "}
+
           <strong>
+
             {formatNumber(
               selectedValue,
               3
@@ -4570,7 +4919,9 @@ export default function Analysis() {
             {variableDefinition.unit
               ? ` ${variableDefinition.unit}`
               : ""}
+
           </strong>
+
         </span>
 
       </div>

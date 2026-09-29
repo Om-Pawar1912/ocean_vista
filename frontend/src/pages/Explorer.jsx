@@ -463,7 +463,6 @@ function OceanVariableLayer({
     </mesh>
   );
 }
-
 /* =========================================================
    ARGO POINT MARKER
 ========================================================= */
@@ -476,25 +475,17 @@ function ArgoFloatModel({
     <group
       onClick={(event) => {
         event.stopPropagation();
-
         onSelect();
       }}
-      scale={
-        selected
-          ? 1.5
-          : 1
-      }
+      scale={selected ? 1.35 : 1}
     >
       {/* MAIN YELLOW POINT */}
-
       <mesh>
         <sphereGeometry
           args={[
-            selected
-              ? 0.075
-              : 0.055,
-            20,
-            20,
+            selected ? 0.045 : 0.028,
+            16,
+            16,
           ]}
         />
 
@@ -503,16 +494,13 @@ function ArgoFloatModel({
         />
       </mesh>
 
-      {/* YELLOW GLOW */}
-
+      {/* SUBTLE YELLOW GLOW */}
       <mesh>
         <sphereGeometry
           args={[
-            selected
-              ? 0.14
-              : 0.09,
-            24,
-            24,
+            selected ? 0.075 : 0.045,
+            20,
+            20,
           ]}
         />
 
@@ -521,102 +509,32 @@ function ArgoFloatModel({
           transparent
           opacity={
             selected
-              ? 0.22
-              : 0.08
+              ? 0.16
+              : 0.045
           }
-          blending={
-            THREE.AdditiveBlending
-          }
+          blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* SELECTED RING */}
-
       {selected && (
         <mesh>
           <ringGeometry
             args={[
-              0.11,
-              0.15,
-              32,
+              0.075,
+              0.10,
+              24,
             ]}
           />
 
           <meshBasicMaterial
             color="#ffffff"
             transparent
-            opacity={0.9}
-            side={
-              THREE.DoubleSide
-            }
+            opacity={0.85}
+            side={THREE.DoubleSide}
           />
         </mesh>
       )}
-    </group>
-  );
-}
-
-/* =========================================================
-   GENERIC MARKER
-========================================================= */
-
-function GenericInstrumentMarker({
-  instrument,
-  selected,
-  onSelect,
-}) {
-  return (
-    <group
-      onClick={(event) => {
-        event.stopPropagation();
-
-        onSelect(instrument);
-      }}
-    >
-      <mesh>
-        <sphereGeometry
-          args={[
-            selected
-              ? 0.12
-              : 0.075,
-            20,
-            20,
-          ]}
-        />
-
-        <meshBasicMaterial
-          color={
-            selected
-              ? "#ffffff"
-              : "#55dcf5"
-          }
-        />
-      </mesh>
-
-      <mesh>
-        <ringGeometry
-          args={[
-            selected
-              ? 0.13
-              : 0.09,
-
-            selected
-              ? 0.17
-              : 0.12,
-
-            32,
-          ]}
-        />
-
-        <meshBasicMaterial
-          color="#19d9ff"
-          transparent
-          opacity={0.9}
-          side={
-            THREE.DoubleSide
-          }
-        />
-      </mesh>
     </group>
   );
 }
@@ -884,16 +802,16 @@ function BrandArea() {
     <div className="brand-area">
       <div className="copernicus-brand">
         <div className="eu-stars">
-          ★★★
+          
         </div>
 
         <div>
           <small>
-            EUROPEAN UNION
+            
           </small>
 
           <strong>
-            Copernicus Marine
+            
           </strong>
         </div>
       </div>
@@ -902,11 +820,11 @@ function BrandArea() {
 
       <div className="mercator-brand">
         <strong>
-          MERCATOR
+          
         </strong>
 
         <small>
-          OCEAN INTERNATIONAL
+          
         </small>
       </div>
     </div>
@@ -1856,88 +1774,6 @@ function Timeline({
   );
 }
 
-/* =========================================================
-   QUALITY
-========================================================= */
-
-function QualityControls({
-  quality,
-  setQuality,
-  dimension,
-  setDimension,
-}) {
-  return (
-    <div className="quality-column">
-      <div className="quality-row">
-        <button
-          className={
-            quality ===
-            "HD"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setQuality(
-              "HD"
-            )
-          }
-        >
-          HD
-        </button>
-
-        <button
-          className={
-            quality ===
-            "SD"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setQuality(
-              "SD"
-            )
-          }
-        >
-          SD
-        </button>
-      </div>
-
-      <div className="quality-row">
-        <button
-          className={
-            dimension ===
-            "3D"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setDimension(
-              "3D"
-            )
-          }
-        >
-          3D
-        </button>
-
-        <button
-          className={
-            dimension ===
-            "2D"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setDimension(
-              "2D"
-            )
-          }
-        >
-          2D
-        </button>
-      </div>
-    </div>
-  );
-}
 
 /* =========================================================
    CREDITS
@@ -2786,25 +2622,6 @@ export default function Explorer() {
         }
         setPlaying={
           setPlaying
-        }
-      />
-
-      {/* =================================================
-          QUALITY
-      ================================================= */}
-
-      <QualityControls
-        quality={
-          quality
-        }
-        setQuality={
-          setQuality
-        }
-        dimension={
-          dimension
-        }
-        setDimension={
-          setDimension
         }
       />
 
